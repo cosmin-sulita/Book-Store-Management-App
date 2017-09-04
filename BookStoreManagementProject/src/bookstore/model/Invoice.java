@@ -10,22 +10,29 @@ public class Invoice implements IInvoice {
 
 	private int invoiceNumber;
 	private Date date;
-	private Supplier supplier;
+	private ISupplier supplier;
 	private List<IProduct> productList;
-	// private IPayment paymentType;
 	private boolean rebate;
+	private double invoiceValue;
 
 	public Invoice() {
-		productList = new ArrayList<IProduct>();
+		this.invoiceNumber = 0;
+		this.date = null;
+		this.supplier = null;
+		this.productList = new ArrayList<IProduct>();
+		this.rebate = false;
+		this.invoiceValue = 0.0;
 	}
 
-	public Invoice(int invoiceNumber, Date date, Supplier supplier, List<IProduct> productList, boolean rebate) {
+	public Invoice(int invoiceNumber, Date date, ISupplier supplier, List<IProduct> productList, boolean rebate,
+			double invoiceValue) {
 		super();
 		this.invoiceNumber = invoiceNumber;
 		this.date = date;
 		this.supplier = supplier;
 		this.productList = productList;
 		this.rebate = rebate;
+		this.invoiceValue = invoiceValue;
 	}
 
 	@Override
@@ -44,11 +51,21 @@ public class Invoice implements IInvoice {
 	@Override
 	public void addProductToList(IProduct product) {
 		productList.add(product);
+		addProductValueToInvoiceValue(product.getTotalPrice());
+	}
+
+	private void addProductValueToInvoiceValue(double value) {
+		invoiceValue += value;
 	}
 
 	@Override
 	public void removeProductFromList(IProduct product) {
 		productList.remove(product);
+		removeProductValueFromInvoceValue(product.getTotalPrice());
+	}
+
+	private void removeProductValueFromInvoceValue(double value) {
+		invoiceValue -= value;
 	}
 
 	@Override
@@ -70,6 +87,16 @@ public class Invoice implements IInvoice {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public double getValue() {
+		return invoiceValue;
+	}
+
+	@Override
+	public String getSupplierName() {
+		return supplier.getName();
 	}
 
 }

@@ -14,4 +14,8 @@ public interface IInvoice extends Serializable {
 
 	IProduct getProductByTitleAndPublisher(String title, String publisher);
 
+	double getValue();
+
+	String getSupplierName();
+
 }

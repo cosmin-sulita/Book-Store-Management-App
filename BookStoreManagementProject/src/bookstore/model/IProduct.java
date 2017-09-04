@@ -14,4 +14,6 @@ public interface IProduct extends Serializable {
 
 	String getTotalPriceAsString();
 
+	double getTotalPrice();
+
 }

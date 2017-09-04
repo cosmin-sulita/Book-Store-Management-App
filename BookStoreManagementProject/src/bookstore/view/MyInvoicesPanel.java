@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 import bookstore.model.MyTableModel;
 
-public class InvoicesPanel extends JPanel {
+public class MyInvoicesPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +43,7 @@ public class InvoicesPanel extends JPanel {
 	String[] bookColumns = { "Invoice", "Supplier", "Value", "Rebate", "Payment" };
 	String[][] bookData = { { " ", " ", " ", " ", " " } };
 
-	public InvoicesPanel() {
+	public MyInvoicesPanel() {
 		super(new FlowLayout());
 		intWidgets();
 		addWidgets();

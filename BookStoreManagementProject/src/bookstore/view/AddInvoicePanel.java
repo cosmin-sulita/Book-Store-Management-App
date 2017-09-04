@@ -233,7 +233,7 @@ public class AddInvoicePanel extends JPanel {
 		hBox9.add(bSaveInvoice);
 		hBox9.add(Box.createHorizontalStrut(140));
 		hBox9.add(jlInvoiceValue);
-		hBox9.add(Box.createHorizontalStrut(20));
+		hBox9.add(Box.createHorizontalStrut(40));
 		hBox9.add(jtInvoiceValue);
 
 		mainBox.add(hBox1);

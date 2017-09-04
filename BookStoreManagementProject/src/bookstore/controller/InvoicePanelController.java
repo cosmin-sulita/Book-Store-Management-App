@@ -18,10 +18,8 @@ import bookstore.model.IInvoice;
 import bookstore.model.IProduct;
 import bookstore.model.ISupplierRepository;
 import bookstore.model.MyTableModel;
-import bookstore.view.AddBookFrame;
 import bookstore.view.AddInvoicePanel;
 import bookstore.view.BookStoreInterface;
-import bookstore.view.BrowseStorePanel;
 
 public class InvoicePanelController implements Serializable {
 
@@ -131,6 +129,7 @@ public class InvoicePanelController implements Serializable {
 						aip.setTextFieldPersonalPrice("");
 
 						updateInvoiceTable(aip, invoice);
+						setInvoiceValue(aip, invoice.getValue());
 					}
 				}
 			} catch (NumberFormatException e) {
@@ -142,7 +141,6 @@ public class InvoicePanelController implements Serializable {
 	}
 
 	public void removeBookFromInvoice(BookStoreInterface screen, AddInvoicePanel aip, IInvoice invoice) {
-
 		int row;
 		int titleColumn = 0;
 		int publisherColumn = 1;
@@ -158,10 +156,10 @@ public class InvoicePanelController implements Serializable {
 			product = invoice.getProductByTitleAndPublisher(title, publisher);
 			invoice.removeProductFromList(product);
 			updateInvoiceTable(aip, invoice);
+			setInvoiceValue(aip, invoice.getValue());
 		} catch (IndexOutOfBoundsException e) {
 			JOptionPane.showMessageDialog(screen, "No book selected");
 		}
-
 	}
 
 	private void updateInvoiceTable(AddInvoicePanel aip, IInvoice invoice) {

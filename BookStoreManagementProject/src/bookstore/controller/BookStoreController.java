@@ -18,6 +18,8 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import bookstore.builders.IInvoiceBuilder;
+import bookstore.builders.InvoiceBuilder;
 import bookstore.model.BookStore;
 import bookstore.model.FinalRepository;
 import bookstore.model.IBookStore;
@@ -26,7 +28,6 @@ import bookstore.model.IInvoice;
 import bookstore.model.IInvoiceRepository;
 import bookstore.model.IRepository;
 import bookstore.model.ISupplierRepository;
-import bookstore.model.Invoice;
 import bookstore.model.InvoiceRepository;
 import bookstore.model.SupplierRepository;
 import bookstore.view.AddBookFrame;
@@ -35,6 +36,7 @@ import bookstore.view.AddSupplierFrame;
 import bookstore.view.BookStoreInterface;
 import bookstore.view.BrowseStorePanel;
 import bookstore.view.LoadScreen;
+import bookstore.view.MyInvoicesPanel;
 
 public class BookStoreController implements ChangeListener, ActionListener, Serializable {
 
@@ -46,6 +48,7 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 	private AddInvoicePanel aip;
 	private AddBookFrame abf;
 	private AddSupplierFrame asf;
+	private MyInvoicesPanel mip;
 
 	private JFileChooser chooser;
 	private FileFilter filter;
@@ -67,10 +70,12 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 	private IInvoiceRepository invoiceRepository;
 	private ISupplierRepository supplierRepository;
 	private IFinalRepository finalRepository;
+	private IInvoiceBuilder invoiceBuilder;
 
 	private BookController bookController;
 	private SupplierController supplierController;
 	private InvoicePanelController invoicePanelController;
+	private MyInvoicesController myInvoicesController;
 
 	public BookStoreController() {
 		initEventAttributes();
@@ -95,10 +100,12 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 		screen = new BookStoreInterface("Book Store");
 		bsp = screen.getBrowseStorePanel();
 		aip = screen.getAddInvoicePanel();
+		mip = screen.getMyInvoicesPanel();
 
 		screen.getTabbedPane().addChangeListener(this);
 		aip.addActionListener(this);
 		bsp.addActionListener(this);
+		mip.addActionListener(this);
 
 		abf = new AddBookFrame("Add New Book");
 		abf.addActionListener(this);
@@ -112,14 +119,16 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 	}
 
 	private void initObjects() {
+		invoiceBuilder = new InvoiceBuilder();
 		bookStore = new BookStore();
-		invoice = new Invoice();
 		supplierRepository = new SupplierRepository();
 		invoiceRepository = new InvoiceRepository();
+		invoice = invoiceBuilder.buildEmptyInvoice();
 
 		bookController = new BookController();
 		supplierController = new SupplierController();
 		invoicePanelController = new InvoicePanelController();
+		myInvoicesController = new MyInvoicesController();
 
 		finalRepository = new FinalRepository();
 		finalRepository.addRepository((IRepository) bookStore);
@@ -151,7 +160,7 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 		} else if (event.getSource() == aip.getButtonRemoveBookFromInvoice()) {
 			invoicePanelController.removeBookFromInvoice(screen, aip, invoice);
 		} else if (event.getSource() == aip.getButtonSaveInvoice()) {
-			// TODO
+			// myInvoicesController.saveInvoice(); //TODO
 		} else if (event.getSource() == bsp.getButtonDeleteBook()) {
 			bookController.removeBookFromStore(screen, abf, aip, bsp, bookStore);
 		} else if (event.getSource() == bsp.getButtonSave()) {

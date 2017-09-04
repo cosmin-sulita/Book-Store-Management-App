@@ -9,7 +9,7 @@ public class BookStoreInterface extends JFrame {
 
 	private BrowseStorePanel bsp;
 	private AddInvoicePanel aiv;
-	private InvoicesPanel ip;
+	private MyInvoicesPanel mip;
 	private JTabbedPane jtb;
 	private String filler;
 
@@ -19,13 +19,13 @@ public class BookStoreInterface extends JFrame {
 		jtb = new JTabbedPane();
 		bsp = new BrowseStorePanel();
 		aiv = new AddInvoicePanel();
-		ip = new InvoicesPanel();
+		mip = new MyInvoicesPanel();
 
 		filler = "      ";
 
 		jtb.addTab(filler + " Add Invoice " + filler, aiv);
 		jtb.addTab(filler + " Browse Store " + filler, bsp);
-		jtb.addTab(filler + "Invoices " + filler, ip);
+		jtb.addTab(filler + "Invoices " + filler, mip);
 
 		add(jtb);
 
@@ -51,8 +51,8 @@ public class BookStoreInterface extends JFrame {
 		return aiv;
 	}
 
-	public InvoicesPanel getInvoicesPanel() {
-		return ip;
+	public MyInvoicesPanel getMyInvoicesPanel() {
+		return mip;
 	}
 
 }
