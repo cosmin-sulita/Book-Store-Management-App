@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Random;
 
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 
 import bookstore.builders.IProductBuilder;
 import bookstore.builders.ProductBuilder;
@@ -17,8 +18,10 @@ import bookstore.model.IInvoice;
 import bookstore.model.IProduct;
 import bookstore.model.ISupplierRepository;
 import bookstore.model.MyTableModel;
+import bookstore.view.AddBookFrame;
 import bookstore.view.AddInvoicePanel;
 import bookstore.view.BookStoreInterface;
+import bookstore.view.BrowseStorePanel;
 
 public class InvoicePanelController implements Serializable {
 
@@ -136,6 +139,29 @@ public class InvoicePanelController implements Serializable {
 		} else {
 			JOptionPane.showMessageDialog(screen, "Please fill out price fields");
 		}
+	}
+
+	public void removeBookFromInvoice(BookStoreInterface screen, AddInvoicePanel aip, IInvoice invoice) {
+
+		int row;
+		int titleColumn = 0;
+		int publisherColumn = 1;
+		String title;
+		String publisher;
+		IProduct product;
+
+		try {
+			row = ((JTable) aip.getBookTable()).getSelectedRow();
+			title = ((JTable) aip.getBookTable()).getValueAt(row, titleColumn).toString();
+			publisher = ((JTable) aip.getBookTable()).getValueAt(row, publisherColumn).toString();
+
+			product = invoice.getProductByTitleAndPublisher(title, publisher);
+			invoice.removeProductFromList(product);
+			updateInvoiceTable(aip, invoice);
+		} catch (IndexOutOfBoundsException e) {
+			JOptionPane.showMessageDialog(screen, "No book selected");
+		}
+
 	}
 
 	private void updateInvoiceTable(AddInvoicePanel aip, IInvoice invoice) {

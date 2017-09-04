@@ -12,4 +12,6 @@ public interface IInvoice extends Serializable {
 
 	boolean doesBookAlreadyExist(IBook book);
 
+	IProduct getProductByTitleAndPublisher(String title, String publisher);
+
 }

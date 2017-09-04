@@ -19,6 +19,15 @@ public class Invoice implements IInvoice {
 		productList = new ArrayList<IProduct>();
 	}
 
+	public Invoice(int invoiceNumber, Date date, Supplier supplier, List<IProduct> productList, boolean rebate) {
+		super();
+		this.invoiceNumber = invoiceNumber;
+		this.date = date;
+		this.supplier = supplier;
+		this.productList = productList;
+		this.rebate = rebate;
+	}
+
 	@Override
 	public String[][] toStringVector() {
 		String[][] total = new String[productList.size()][6];
@@ -50,6 +59,17 @@ public class Invoice implements IInvoice {
 				return true;
 		}
 		return false;
+	}
+
+	@Override
+	public IProduct getProductByTitleAndPublisher(String title, String publisher) {
+		for (IProduct product : productList) {
+			if (product.getBookTitle().toLowerCase().equals(title.toLowerCase())
+					&& product.getBookPublisher().toLowerCase().equals(publisher.toLowerCase())) {
+				return product;
+			}
+		}
+		return null;
 	}
 
 }

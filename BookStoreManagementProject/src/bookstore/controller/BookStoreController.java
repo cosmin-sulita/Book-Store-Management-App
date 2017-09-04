@@ -149,7 +149,7 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 		} else if (event.getSource() == aip.getButtonAddBookToInvoice()) {
 			invoicePanelController.addBookToInvoice(screen, aip, invoice);
 		} else if (event.getSource() == aip.getButtonRemoveBookFromInvoice()) {
-			// TODO
+			invoicePanelController.removeBookFromInvoice(screen, aip, invoice);
 		} else if (event.getSource() == aip.getButtonSaveInvoice()) {
 			// TODO
 		} else if (event.getSource() == bsp.getButtonDeleteBook()) {
