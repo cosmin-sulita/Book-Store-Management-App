@@ -1,6 +1,7 @@
 package bookstore.model;
 
 import java.io.Serializable;
+import java.util.List;
 
 public interface IInvoice extends Serializable {
 
@@ -17,5 +18,15 @@ public interface IInvoice extends Serializable {
 	double getValue();
 
 	String getSupplierName();
+
+	List<IProduct> getProductList();
+
+	String getInvoiceNumberAsString();
+
+	String getValueAsString();
+
+	String getRebateAsString();
+
+	String getPaymentAsString();
 
 }

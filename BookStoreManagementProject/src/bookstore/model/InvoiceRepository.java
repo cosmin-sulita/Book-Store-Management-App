@@ -23,4 +23,17 @@ public class InvoiceRepository implements IInvoiceRepository, IRepository {
 		invoiceList.remove(invoice);
 	}
 
+	@Override
+	public String[][] toStringVector() {
+		String[][] total = new String[invoiceList.size()][6];
+		for (int i = 0; i < invoiceList.size(); i++) {
+			total[i][0] = invoiceList.get(i).getInvoiceNumberAsString();
+			total[i][1] = invoiceList.get(i).getSupplierName();
+			total[i][2] = invoiceList.get(i).getValueAsString();
+			total[i][3] = invoiceList.get(i).getRebateAsString();
+			total[i][4] = invoiceList.get(i).getPaymentAsString();
+		}
+		return total;
+	}
+
 }

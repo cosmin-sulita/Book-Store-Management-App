@@ -35,6 +35,17 @@ public class Invoice implements IInvoice {
 		this.invoiceValue = invoiceValue;
 	}
 
+	public Invoice(int invoiceNumber, ISupplier supplier, List<IProduct> productList, double invoiceValue,
+			boolean rebate) {
+		super();
+		this.invoiceNumber = invoiceNumber;
+		this.supplier = supplier;
+		this.productList = productList;
+		this.invoiceValue = invoiceValue;
+		this.rebate = rebate;
+
+	}
+
 	@Override
 	public String[][] toStringVector() {
 		String[][] total = new String[productList.size()][6];
@@ -97,6 +108,31 @@ public class Invoice implements IInvoice {
 	@Override
 	public String getSupplierName() {
 		return supplier.getName();
+	}
+
+	@Override
+	public List<IProduct> getProductList() {
+		return productList;
+	}
+
+	@Override
+	public String getInvoiceNumberAsString() {
+		return String.valueOf(invoiceNumber);
+	}
+
+	@Override
+	public String getValueAsString() {
+		return String.valueOf(invoiceValue);
+	}
+
+	@Override
+	public String getRebateAsString() {
+		return String.valueOf(rebate);
+	}
+
+	@Override
+	public String getPaymentAsString() {
+		return "payment";
 	}
 
 }

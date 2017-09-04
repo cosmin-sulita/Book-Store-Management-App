@@ -8,4 +8,6 @@ public interface IInvoiceRepository extends Serializable {
 
 	void removeInvoiceFromList(IInvoice invoice);
 
+	String[][] toStringVector();
+
 }
