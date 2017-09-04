@@ -23,7 +23,7 @@ import bookstore.model.IBook;
 import bookstore.model.ISupplier;
 import bookstore.model.MyTableModel;
 
-public class AddInvoicePanel extends JPanel implements IView {
+public class AddInvoicePanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -43,7 +43,7 @@ public class AddInvoicePanel extends JPanel implements IView {
 	private JLabel jlInvoice;
 	private JLabel jlSupplier;
 	private JLabel jlBook;
-	private JLabel jlQty;
+	private JLabel jlQuantity;
 	private JLabel jlInvoiceValue;
 	private JLabel jlPublisher;
 	private JLabel jlSupplierPrice;
@@ -51,7 +51,7 @@ public class AddInvoicePanel extends JPanel implements IView {
 
 	private JTextField jtInvoiceNo;
 	private JTextField jtDate;
-	private JTextField jtQty;
+	private JTextField jtQuantity;
 	private JTextField jtInvoiceValue;
 	private JTextField jtPublisher;
 	private JTextField jtSupplierPrice;
@@ -104,20 +104,20 @@ public class AddInvoicePanel extends JPanel implements IView {
 		jlSupplier = new JLabel("Supplier");
 		jlBook = new JLabel("Book");
 		jlPublisher = new JLabel("Publisher");
-		jlQty = new JLabel("Qty");
+		jlQuantity = new JLabel("Quantity");
 		jlInvoice = new JLabel("Invoice");
 		jlInvoiceValue = new JLabel("Invoice Value");
 		jlSupplierPrice = new JLabel("Supp Price");
 		jlPersonalPrice = new JLabel("My Price");
 
-		jtInvoiceNo = new JTextField(1);
-		jtDate = new JTextField(1);
-		jtPublisher = new JTextField(1);
-		jtInvoiceValue = new JTextField(1);
-		jtQty = new JTextField(1);
-		jtSupplierPrice = new JTextField(1);
-		jtPersonalPrice = new JTextField(1);
-		jtTerm = new JTextField(1);
+		jtInvoiceNo = new JTextField();
+		jtDate = new JTextField();
+		jtPublisher = new JTextField();
+		jtInvoiceValue = new JTextField();
+		jtQuantity = new JTextField();
+		jtSupplierPrice = new JTextField();
+		jtPersonalPrice = new JTextField();
+		jtTerm = new JTextField();
 
 		jcSupplier = new JComboBox<ISupplier>();
 		jcBook = new JComboBox<IBook>();
@@ -125,7 +125,7 @@ public class AddInvoicePanel extends JPanel implements IView {
 
 		jtInvoiceNo.setHorizontalAlignment(JTextField.LEFT);
 		jtDate.setHorizontalAlignment(JTextField.LEFT);
-		jtQty.setHorizontalAlignment(JTextField.CENTER);
+		jtQuantity.setHorizontalAlignment(JTextField.CENTER);
 		jtInvoiceValue.setHorizontalAlignment(JTextField.CENTER);
 		jtSupplierPrice.setHorizontalAlignment(JTextField.CENTER);
 		jtPersonalPrice.setHorizontalAlignment(JTextField.CENTER);
@@ -133,8 +133,9 @@ public class AddInvoicePanel extends JPanel implements IView {
 		jtPublisher.setEditable(false);
 		jtInvoiceValue.setEditable(false);
 		jtDate.setEditable(false);
+		jtInvoiceNo.setEditable(false);
 
-		jtQty.setText("1");
+		jtQuantity.setText("1");
 		jtInvoiceValue.setText("0");
 
 		bSaveInvoice = new JButton("Save Invoice");
@@ -208,10 +209,10 @@ public class AddInvoicePanel extends JPanel implements IView {
 		hBox5.add(jlPersonalPrice);
 		hBox5.add(Box.createHorizontalStrut(10));
 		hBox5.add(jtPersonalPrice);
-		hBox5.add(Box.createHorizontalStrut(20));
-		hBox5.add(jlQty);
 		hBox5.add(Box.createHorizontalStrut(10));
-		hBox5.add(jtQty);
+		hBox5.add(jlQuantity);
+		hBox5.add(Box.createHorizontalStrut(10));
+		hBox5.add(jtQuantity);
 
 		hBox6.add(Box.createHorizontalStrut(220));
 		hBox6.add(bAddProduct);
@@ -287,7 +288,7 @@ public class AddInvoicePanel extends JPanel implements IView {
 		return bRemoveProduct;
 	}
 
-	public JCheckBox getCheckBoxPrice() {
+	public JCheckBox getCheckBoxRebate() {
 		return cbRebate;
 	}
 
@@ -350,7 +351,7 @@ public class AddInvoicePanel extends JPanel implements IView {
 	}
 
 	public String getTextFieldQuantity() {
-		return jtQty.getText().trim();
+		return jtQuantity.getText().trim();
 	}
 
 	public String getTextFieldSupplierPrice() {
@@ -362,7 +363,7 @@ public class AddInvoicePanel extends JPanel implements IView {
 	}
 
 	public void setTextFieldQuantity(String quantity) {
-		jtQty.setText(quantity);
+		jtQuantity.setText(quantity);
 	}
 
 	public void setTextFieldPersonalPrice(String price) {
@@ -387,6 +388,27 @@ public class AddInvoicePanel extends JPanel implements IView {
 
 	public String getTextFieldInvoiceValue() {
 		return jtInvoiceValue.getText().trim();
+	}
+
+	public void setInvoiceNumber(String invoiceNumber) {
+		jtInvoiceNo.setText(invoiceNumber);
+	}
+
+	public void disablePersonalPrice() {
+		jtPersonalPrice.setText("");
+		jtPersonalPrice.setEditable(false);
+	}
+
+	public void enablePersonalPrice() {
+		jtPersonalPrice.setEditable(true);
+	}
+
+	public String getTextFieldPersonalPrice() {
+		return jtPersonalPrice.getText().trim();
+	}
+
+	public String getTextFieldInvoiceNumber() {
+		return jtInvoiceNo.getText().trim();
 	}
 
 }

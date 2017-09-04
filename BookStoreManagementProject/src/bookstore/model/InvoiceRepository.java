@@ -3,7 +3,7 @@ package bookstore.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvoiceRepository implements IInvoiceRepository {
+public class InvoiceRepository implements IInvoiceRepository, IRepository {
 
 	private static final long serialVersionUID = 1L;
 

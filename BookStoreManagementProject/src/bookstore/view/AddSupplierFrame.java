@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 
-public class AddSupplierFrame extends JFrame implements IView {
+public class AddSupplierFrame extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
@@ -62,6 +62,7 @@ public class AddSupplierFrame extends JFrame implements IView {
 		hBox2.add(Box.createHorizontalStrut(20));
 		hBox2.add(bAddSupplier);
 
+		mainBox.add(Box.createVerticalStrut(10));
 		mainBox.add(hBox1);
 		mainBox.add(Box.createVerticalStrut(10));
 		mainBox.add(hBox2);

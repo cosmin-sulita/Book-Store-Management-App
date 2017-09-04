@@ -18,18 +18,15 @@ import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-import bookstore.builders.BookBuilder;
-import bookstore.builders.IBookBuilder;
-import bookstore.builders.IInvoiceBuilder;
-import bookstore.builders.ISupplierBuilder;
-import bookstore.builders.InvoiceBuilder;
-import bookstore.builders.SupplierBuilder;
 import bookstore.model.BookStore;
 import bookstore.model.FinalRepository;
 import bookstore.model.IBookStore;
+import bookstore.model.IFinalRepository;
+import bookstore.model.IInvoice;
 import bookstore.model.IInvoiceRepository;
 import bookstore.model.IRepository;
 import bookstore.model.ISupplierRepository;
+import bookstore.model.Invoice;
 import bookstore.model.InvoiceRepository;
 import bookstore.model.SupplierRepository;
 import bookstore.view.AddBookFrame;
@@ -61,23 +58,19 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 	private FileInputStream fis;
 	private ObjectInputStream in;
 
-	private String[][] dataProduct;
-
 	private String fileName;
 
 	private boolean exit;
 
 	private IBookStore bookStore;
+	private IInvoice invoice;
 	private IInvoiceRepository invoiceRepository;
 	private ISupplierRepository supplierRepository;
-
-	private IBookBuilder bookBuilder;
-	private IInvoiceBuilder invoiceBuilder;
-	private ISupplierBuilder supplierBuilder;
+	private IFinalRepository finalRepository;
 
 	private BookController bookController;
 	private SupplierController supplierController;
-	private FinalRepository finalRepository;
+	private InvoicePanelController invoicePanelController;
 
 	public BookStoreController() {
 		initEventAttributes();
@@ -120,15 +113,13 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 
 	private void initObjects() {
 		bookStore = new BookStore();
+		invoice = new Invoice();
 		supplierRepository = new SupplierRepository();
 		invoiceRepository = new InvoiceRepository();
 
-		bookBuilder = new BookBuilder();
-		supplierBuilder = new SupplierBuilder();
-		invoiceBuilder = new InvoiceBuilder();
-
 		bookController = new BookController();
 		supplierController = new SupplierController();
+		invoicePanelController = new InvoicePanelController();
 
 		finalRepository = new FinalRepository();
 		finalRepository.addRepository((IRepository) bookStore);
@@ -142,15 +133,21 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 			loadLibrary();
 		} else if (event.getSource() == ls.getButtonNew()) {
 			ls.dispose();
+			invoicePanelController.setInvoiceNumber(aip);
+			invoicePanelController.setCurrentDateDate(aip);
 			screen.setVisible(true);
 		} else if (event.getSource() == ls.getButtonExit()) {
 			System.exit(0);
+		} else if (event.getSource() == aip.getComboBoxBook()) {
+			invoicePanelController.setPublisherText(aip, bookStore);
+		} else if (event.getSource() == aip.getCheckBoxRebate()) {
+			invoicePanelController.setRebatePricing(aip);
 		} else if (event.getSource() == aip.getButtonAddNewSupplier()) {
 			asf.setVisible(true);
 		} else if (event.getSource() == aip.getButtonAddNewBook()) {
 			abf.setVisible(true);
 		} else if (event.getSource() == aip.getButtonAddBookToInvoice()) {
-			// TODO
+			invoicePanelController.addBookToInvoice(screen, aip, invoice);
 		} else if (event.getSource() == aip.getButtonRemoveBookFromInvoice()) {
 			// TODO
 		} else if (event.getSource() == aip.getButtonSaveInvoice()) {
@@ -173,7 +170,9 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 	}
 
 	private void loadLibrary() {
+		File myDirectory = new File("E:\\Academy\\bookStoreManagementApp\\BookStoreManagementProject");
 		chooser.setFileFilter(filter);
+		chooser.setCurrentDirectory(myDirectory);
 		resultCode = chooser.showOpenDialog(screen);
 		if (resultCode == JFileChooser.APPROVE_OPTION) {
 			libFile = chooser.getSelectedFile();
@@ -197,10 +196,10 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 			bookStore.sortBookListAlphabetically();
 			supplierController.sortSupplierListAlphabetically(supplierRepository.getList());
 
-			aip.populateBookComboBox(bookStore.getBookList());
-			aip.populateSupplierComboBox(supplierRepository.getList());
-
 			bookController.updateBookTable(bsp, bookStore);
+			invoicePanelController.setInvoiceNumber(aip);
+			invoicePanelController.setCurrentDateDate(aip);
+			invoicePanelController.populateComboBoxes(aip, bookStore, supplierRepository);
 
 			screen.setVisible(true);
 		}

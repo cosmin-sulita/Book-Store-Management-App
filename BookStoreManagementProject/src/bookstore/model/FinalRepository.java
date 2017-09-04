@@ -3,7 +3,7 @@ package bookstore.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FinalRepository implements IRepository {
+public class FinalRepository implements IFinalRepository {
 
 	private static final long serialVersionUID = 1L;
 

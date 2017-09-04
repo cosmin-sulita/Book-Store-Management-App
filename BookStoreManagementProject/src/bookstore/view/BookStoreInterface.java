@@ -3,12 +3,13 @@ package bookstore.view;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
-public class BookStoreInterface extends JFrame implements IView {
+public class BookStoreInterface extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
 	private BrowseStorePanel bsp;
 	private AddInvoicePanel aiv;
+	private InvoicesPanel ip;
 	private JTabbedPane jtb;
 	private String filler;
 
@@ -18,11 +19,13 @@ public class BookStoreInterface extends JFrame implements IView {
 		jtb = new JTabbedPane();
 		bsp = new BrowseStorePanel();
 		aiv = new AddInvoicePanel();
+		ip = new InvoicesPanel();
 
 		filler = "      ";
 
 		jtb.addTab(filler + " Add Invoice " + filler, aiv);
 		jtb.addTab(filler + " Browse Store " + filler, bsp);
+		jtb.addTab(filler + "Invoices " + filler, ip);
 
 		add(jtb);
 
@@ -46,6 +49,10 @@ public class BookStoreInterface extends JFrame implements IView {
 
 	public AddInvoicePanel getAddInvoicePanel() {
 		return aiv;
+	}
+
+	public InvoicesPanel getInvoicesPanel() {
+		return ip;
 	}
 
 }

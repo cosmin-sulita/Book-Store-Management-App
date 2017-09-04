@@ -14,7 +14,7 @@ import javax.swing.JTextField;
 
 import bookstore.model.MyTableModel;
 
-public class BrowseStorePanel extends JPanel {
+public class InvoicesPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 
@@ -40,10 +40,10 @@ public class BrowseStorePanel extends JPanel {
 	private MyTableModel model;
 	private JScrollPane spBookTable;
 
-	String[] bookColumns = { "Title", "Author", "Publisher", "Price", "Stock", "ISBN" };
-	String[][] bookData = { { " ", " ", " ", " ", " ", " " } };
+	String[] bookColumns = { "Invoice", "Supplier", "Value", "Rebate", "Payment" };
+	String[][] bookData = { { " ", " ", " ", " ", " " } };
 
-	public BrowseStorePanel() {
+	public InvoicesPanel() {
 		super(new FlowLayout());
 		intWidgets();
 		addWidgets();
@@ -58,7 +58,7 @@ public class BrowseStorePanel extends JPanel {
 		hBox4 = Box.createHorizontalBox();
 		hBox5 = Box.createHorizontalBox();
 
-		jlBookTable = new JLabel("Showing All Books in Library");
+		jlBookTable = new JLabel("Showing All Invoices To Pay");
 		jlTotalIncome = new JLabel("Total income");
 
 		jtTotalIncome = new JTextField();
@@ -76,10 +76,10 @@ public class BrowseStorePanel extends JPanel {
 		tBooks.setFillsViewportHeight(true);
 		tBooks.setAutoCreateRowSorter(true);
 		tBooks.getTableHeader().setReorderingAllowed(false);
-		tBooks.getColumnModel().getColumn(0).setPreferredWidth(180);
-		tBooks.getColumnModel().getColumn(1).setPreferredWidth(150);
-		tBooks.getColumnModel().getColumn(3).setPreferredWidth(50);
-		tBooks.getColumnModel().getColumn(4).setPreferredWidth(40);
+		tBooks.getColumnModel().getColumn(0).setPreferredWidth(40);
+		tBooks.getColumnModel().getColumn(1).setPreferredWidth(100);
+		tBooks.getColumnModel().getColumn(2).setPreferredWidth(30);
+		tBooks.getColumnModel().getColumn(3).setPreferredWidth(20);
 
 		spBookTable = new JScrollPane(tBooks);
 

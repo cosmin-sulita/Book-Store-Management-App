@@ -7,7 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-public class LoadScreen extends JFrame implements IView {
+public class LoadScreen extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 
