@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -172,6 +173,12 @@ public class InvoicePanelController implements Serializable {
 		for (int i = 0; i < dataProduct.length; i++) {
 			((MyTableModel) aip.getBookTable().getModel()).addRow(dataProduct[i]);
 		}
+	}
+
+	public void clearInvoice(AddInvoicePanel aip, IInvoice invoice) {
+		Collection<IProduct> c = invoice.getProductList();
+		invoice.getProductList().removeAll(c);
+		updateInvoiceTable(aip, invoice);
 	}
 
 }

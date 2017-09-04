@@ -19,7 +19,7 @@ public class MyInvoicesController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	public void saveInvoice(AddInvoicePanel aip, IInvoice invoice, IInvoiceRepository invoiceRepository,
-			MyInvoicesPanel mip) {
+			MyInvoicesPanel mip, InvoicePanelController invoicePanelController) {
 
 		int invoiceNumber;
 		List<IProduct> productList;
@@ -41,12 +41,11 @@ public class MyInvoicesController implements Serializable {
 		invoiceRepository.addInvoiceToList(invoice);
 
 		updateInvoicesTable(mip, invoiceRepository);
-		clearInvoicePanel(aip);
+		clearInvoicePanel(aip, invoicePanelController);
 	}
 
-	private void clearInvoicePanel(AddInvoicePanel aip) {
-		// TODO Auto-generated method stub
-
+	private void clearInvoicePanel(AddInvoicePanel aip, InvoicePanelController invoicePanelController) {
+		invoicePanelController.setInvoiceNumber(aip);
 	}
 
 	private void updateInvoicesTable(MyInvoicesPanel mip, IInvoiceRepository invoiceRepository) {

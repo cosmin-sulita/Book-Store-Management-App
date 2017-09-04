@@ -30,7 +30,6 @@ public class MyInvoicesPanel extends JPanel {
 
 	private JTextField jtTotalIncome;
 
-	private JButton bSellBook;
 	private JButton bDeleteBook;
 	private JButton bSave;
 	private JButton bSaveAndQuit;
@@ -65,7 +64,6 @@ public class MyInvoicesPanel extends JPanel {
 		jtTotalIncome.setHorizontalAlignment(JTextField.CENTER);
 		jtTotalIncome.setEditable(false);
 
-		bSellBook = new JButton("Sell");
 		bDeleteBook = new JButton("Delete");
 		bSave = new JButton("Save");
 		bSaveAndQuit = new JButton("Save & Quit");
@@ -76,7 +74,7 @@ public class MyInvoicesPanel extends JPanel {
 		tBooks.setFillsViewportHeight(true);
 		tBooks.setAutoCreateRowSorter(true);
 		tBooks.getTableHeader().setReorderingAllowed(false);
-		tBooks.getColumnModel().getColumn(0).setPreferredWidth(40);
+		tBooks.getColumnModel().getColumn(0).setPreferredWidth(20);
 		tBooks.getColumnModel().getColumn(1).setPreferredWidth(100);
 		tBooks.getColumnModel().getColumn(2).setPreferredWidth(30);
 		tBooks.getColumnModel().getColumn(3).setPreferredWidth(20);
@@ -92,8 +90,6 @@ public class MyInvoicesPanel extends JPanel {
 		hBox1.add(jlBookTable);
 		hBox1.add(Box.createHorizontalStrut(170));
 		hBox1.add(bDeleteBook);
-		hBox1.add(Box.createHorizontalStrut(5));
-		hBox1.add(bSellBook);
 
 		hBox2.add(spBookTable);
 
@@ -119,14 +115,9 @@ public class MyInvoicesPanel extends JPanel {
 	}
 
 	public void addActionListener(ActionListener a) {
-		bSellBook.addActionListener(a);
 		bDeleteBook.addActionListener(a);
 		bSave.addActionListener(a);
 		bSaveAndQuit.addActionListener(a);
-	}
-
-	public JButton getButtonSellBook() {
-		return bSellBook;
 	}
 
 	public JButton getButtonDeleteBook() {
