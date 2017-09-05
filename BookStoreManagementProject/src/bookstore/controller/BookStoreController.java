@@ -169,9 +169,9 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 		} else if (event.getSource() == bsp.getButtonSaveAndQuit()) {
 			saveAndQuit();
 		} else if (event.getSource() == asf.getButtonAddSupplier()) {
-			supplierController.addNewSupplier(screen, asf, aip, supplierRepository);
+			supplierController.addNewSupplier(asf, aip, supplierRepository);
 		} else if (event.getSource() == abf.getButtonAddBook()) {
-			bookController.addBookToBookStore(screen, abf, aip, bsp, bookStore);
+			bookController.addBookToBookStore(abf, aip, bsp, bookStore);
 		} else if (event.getSource() == abf.getButtonSave()) {
 			save();
 		} else if (event.getSource() == abf.getButtonSaveAndQuit()) {

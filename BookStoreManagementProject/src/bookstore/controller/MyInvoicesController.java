@@ -34,24 +34,28 @@ public class MyInvoicesController implements Serializable {
 
 		IInvoice newInvoice;
 
-		invoiceNumber = Integer.parseInt(aip.getTextFieldInvoiceNumber());
-		supplier = aip.getSelectedSupplier();
+		try {
+			invoiceNumber = Integer.parseInt(aip.getTextFieldInvoiceNumber());
+			supplier = aip.getSelectedSupplier();
 
-		for (IProduct product : invoice.getProductList()) {
-			productList.add(product);
+			for (IProduct product : invoice.getProductList()) {
+				productList.add(product);
+			}
+
+			rebate = aip.getCheckBoxRebate().isSelected();
+			invoiceValue = invoice.getValue();
+
+			IInvoiceBuilder invoiceBuilder;
+
+			invoiceBuilder = new InvoiceBuilder();
+			newInvoice = new Invoice(invoiceNumber, supplier, productList, invoiceValue, rebate);
+
+			invoiceRepository.addInvoiceToList(newInvoice);
+
+			updateInvoicesTable(mip, invoiceRepository);
+		} catch (NullPointerException e) {
+			JOptionPane.showMessageDialog(aip, "Incomplete invoice");
 		}
-
-		rebate = aip.getCheckBoxRebate().isSelected();
-		invoiceValue = invoice.getValue();
-
-		IInvoiceBuilder invoiceBuilder;
-
-		invoiceBuilder = new InvoiceBuilder();
-		newInvoice = new Invoice(invoiceNumber, supplier, productList, invoiceValue, rebate);
-
-		invoiceRepository.addInvoiceToList(newInvoice);
-
-		updateInvoicesTable(mip, invoiceRepository);
 	}
 
 	public void updateInvoicesTable(MyInvoicesPanel mip, IInvoiceRepository invoiceRepository) {

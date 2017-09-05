@@ -19,8 +19,7 @@ public class BookController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public void addBookToBookStore(BookStoreInterface screen, AddBookFrame abf, AddInvoicePanel aip,
-			BrowseStorePanel bsp, IBookStore bookStore) {
+	public void addBookToBookStore(AddBookFrame abf, AddInvoicePanel aip, BrowseStorePanel bsp, IBookStore bookStore) {
 		boolean ISBNAlreadyExist = false;
 		boolean AllFieldsAreFilled = false;
 
@@ -47,7 +46,7 @@ public class BookController implements Serializable {
 
 				ISBNAlreadyExist = bookStore.doesISBNAlreadyExist(isbn);
 				if (ISBNAlreadyExist) {
-					JOptionPane.showMessageDialog(screen, isbn + " already exist!\nPlease use another isbn!");
+					JOptionPane.showMessageDialog(abf, isbn + " already exist!\nPlease use another isbn!");
 				} else {
 
 					title = abf.getTextFieldTitle();
@@ -72,10 +71,10 @@ public class BookController implements Serializable {
 					updateBookTable(bsp, bookStore);
 				}
 			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(screen, "Isbn is not a number!");
+				JOptionPane.showMessageDialog(abf, "Isbn is not a number!");
 			}
 		} else {
-			JOptionPane.showMessageDialog(screen, "Please fill out all non-optional fields");
+			JOptionPane.showMessageDialog(abf, "Please fill out all non-optional fields");
 		}
 	}
 

@@ -19,8 +19,7 @@ public class SupplierController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public void addNewSupplier(BookStoreInterface screen, AddSupplierFrame asf, AddInvoicePanel aip,
-			ISupplierRepository supplierRepository) {
+	public void addNewSupplier(AddSupplierFrame asf, AddInvoicePanel aip, ISupplierRepository supplierRepository) {
 
 		boolean nameAlreadyExists = false;
 		boolean AllFieldsAreFilled = false;
@@ -40,7 +39,7 @@ public class SupplierController implements Serializable {
 				nameAlreadyExists = supplierRepository.doesNameAlreadyExist(name);
 
 				if (nameAlreadyExists) {
-					JOptionPane.showMessageDialog(screen, name + " already exists!\nPlease use another name!");
+					JOptionPane.showMessageDialog(asf, name + " already exists!\nPlease use another name!");
 				} else {
 
 					supplierBuilder = new SupplierBuilder();
@@ -54,10 +53,10 @@ public class SupplierController implements Serializable {
 					asf.setTextFieldName("");
 				}
 			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(screen, "Isbn is not a number!");
+				JOptionPane.showMessageDialog(asf, "Isbn is not a number!");
 			}
 		} else {
-			JOptionPane.showMessageDialog(screen, "Please fill out all non-optional fields");
+			JOptionPane.showMessageDialog(asf, "Please fill out all non-optional fields");
 		}
 	}
 
