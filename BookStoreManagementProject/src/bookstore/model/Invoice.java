@@ -1,6 +1,7 @@
 package bookstore.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -133,6 +134,22 @@ public class Invoice implements IInvoice {
 	@Override
 	public String getPaymentAsString() {
 		return "payment";
+	}
+
+	@Override
+	public int getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+	@Override
+	public void removeAllProducts() {
+		Collection<IProduct> collection = productList;
+		productList.removeAll(collection);
+	}
+
+	@Override
+	public void resetValue() {
+		invoiceValue = 0;
 	}
 
 }

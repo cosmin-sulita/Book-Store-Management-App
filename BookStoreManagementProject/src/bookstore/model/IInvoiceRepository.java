@@ -10,4 +10,6 @@ public interface IInvoiceRepository extends Serializable {
 
 	String[][] toStringVector();
 
+	IInvoice getInvoiceByNumber(String invoiceNumber);
+
 }

@@ -29,4 +29,10 @@ public interface IInvoice extends Serializable {
 
 	String getPaymentAsString();
 
+	int getInvoiceNumber();
+
+	void removeAllProducts();
+
+	void resetValue();
+
 }

@@ -49,6 +49,8 @@ public class AddInvoicePanel extends JPanel {
 	private JLabel jlSupplierPrice;
 	private JLabel jlPersonalPrice;
 
+	private JLabel jlBlank;
+
 	private JTextField jtInvoiceNo;
 	private JTextField jtDate;
 	private JTextField jtQuantity;
@@ -61,7 +63,7 @@ public class AddInvoicePanel extends JPanel {
 	private JComboBox<ISupplier> jcSupplier;
 	private JComboBox<IBook> jcBook;
 
-	private JButton bSaveInvoice;
+	private JButton bAddInvoice;
 	private JButton bAddNewSupplier;
 	private JButton bAddNewBook;
 	private JButton bAddProduct;
@@ -110,6 +112,8 @@ public class AddInvoicePanel extends JPanel {
 		jlSupplierPrice = new JLabel("Supp Price");
 		jlPersonalPrice = new JLabel("My Price");
 
+		jlBlank = new JLabel("                                 ");
+
 		jtInvoiceNo = new JTextField();
 		jtDate = new JTextField();
 		jtPublisher = new JTextField();
@@ -123,8 +127,8 @@ public class AddInvoicePanel extends JPanel {
 		jcBook = new JComboBox<IBook>();
 		AutoCompleteDecorator.decorate(jcBook);
 
-		jtInvoiceNo.setHorizontalAlignment(JTextField.LEFT);
-		jtDate.setHorizontalAlignment(JTextField.LEFT);
+		jtInvoiceNo.setHorizontalAlignment(JTextField.CENTER);
+		jtDate.setHorizontalAlignment(JTextField.CENTER);
 		jtQuantity.setHorizontalAlignment(JTextField.CENTER);
 		jtInvoiceValue.setHorizontalAlignment(JTextField.CENTER);
 		jtSupplierPrice.setHorizontalAlignment(JTextField.CENTER);
@@ -138,7 +142,7 @@ public class AddInvoicePanel extends JPanel {
 		jtQuantity.setText("1");
 		jtInvoiceValue.setText("0");
 
-		bSaveInvoice = new JButton("Save Invoice");
+		bAddInvoice = new JButton("Add Invoice");
 		bAddNewSupplier = new JButton("New Supplier");
 		bAddNewBook = new JButton("New Book");
 		bAddProduct = new JButton("Add Product");
@@ -179,6 +183,8 @@ public class AddInvoicePanel extends JPanel {
 		hBox1.add(Box.createHorizontalStrut(5));
 		hBox1.add(jtInvoiceNo);
 		hBox1.add(Box.createHorizontalStrut(96));
+		hBox1.add(jlBlank);
+		hBox1.add(Box.createHorizontalStrut(28));
 		hBox1.add(jlDate);
 		hBox1.add(Box.createHorizontalStrut(5));
 		hBox1.add(jtDate);
@@ -230,10 +236,10 @@ public class AddInvoicePanel extends JPanel {
 
 		hBox8.add(spBookTable);
 
-		hBox9.add(bSaveInvoice);
+		hBox9.add(bAddInvoice);
 		hBox9.add(Box.createHorizontalStrut(140));
 		hBox9.add(jlInvoiceValue);
-		hBox9.add(Box.createHorizontalStrut(40));
+		hBox9.add(Box.createHorizontalStrut(20));
 		hBox9.add(jtInvoiceValue);
 
 		mainBox.add(hBox1);
@@ -261,7 +267,7 @@ public class AddInvoicePanel extends JPanel {
 	public void addActionListener(ActionListener a) {
 		bAddNewSupplier.addActionListener(a);
 		bAddNewBook.addActionListener(a);
-		bSaveInvoice.addActionListener(a);
+		bAddInvoice.addActionListener(a);
 		bAddProduct.addActionListener(a);
 		bRemoveProduct.addActionListener(a);
 		cbRebate.addActionListener(a);
@@ -269,7 +275,7 @@ public class AddInvoicePanel extends JPanel {
 	}
 
 	public JButton getButtonSaveInvoice() {
-		return bSaveInvoice;
+		return bAddInvoice;
 	}
 
 	public JButton getAddNewSupplier() {

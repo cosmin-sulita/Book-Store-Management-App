@@ -160,8 +160,8 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 		} else if (event.getSource() == aip.getButtonRemoveBookFromInvoice()) {
 			invoicePanelController.removeBookFromInvoice(screen, aip, invoice);
 		} else if (event.getSource() == aip.getButtonSaveInvoice()) {
-			myInvoicesController.saveInvoice(aip, invoice, invoiceRepository, mip, invoicePanelController);
-			invoicePanelController.clearInvoice(aip, invoice);
+			myInvoicesController.saveInvoice(aip, invoice, invoiceRepository, mip);
+			invoicePanelController.clearInvoicePanel(aip, invoice);
 		} else if (event.getSource() == bsp.getButtonDeleteBook()) {
 			bookController.removeBookFromStore(screen, abf, aip, bsp, bookStore);
 		} else if (event.getSource() == bsp.getButtonSave()) {
@@ -175,6 +175,12 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 		} else if (event.getSource() == abf.getButtonSave()) {
 			save();
 		} else if (event.getSource() == abf.getButtonSaveAndQuit()) {
+			saveAndQuit();
+		} else if (event.getSource() == mip.getButtonOpenInvoice()) {
+			myInvoicesController.openInvoice(screen, mip, invoiceRepository);
+		} else if (event.getSource() == mip.getButtonSave()) {
+			save();
+		} else if (event.getSource() == mip.getButtonSaveAndQuit()) {
 			saveAndQuit();
 		}
 	}
@@ -193,6 +199,7 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 				finalRepository = (FinalRepository) in.readObject();
 				bookStore = (BookStore) finalRepository.getRepository(0);
 				supplierRepository = (SupplierRepository) finalRepository.getRepository(1);
+				// invoiceRepository = (InvoiceRepository) finalRepository.getRepository(2);
 
 				in.close();
 			} catch (IOException e) {
@@ -210,6 +217,7 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 			invoicePanelController.setInvoiceNumber(aip);
 			invoicePanelController.setCurrentDateDate(aip);
 			invoicePanelController.populateComboBoxes(aip, bookStore, supplierRepository);
+			myInvoicesController.updateInvoicesTable(mip, invoiceRepository);
 
 			screen.setVisible(true);
 		}

@@ -13,12 +13,17 @@ public class FinalRepository implements IFinalRepository {
 		repositoryList = new ArrayList<IRepository>();
 	}
 
-	public void addRepository(IRepository bookStore) {
-		repositoryList.add(bookStore);
+	public void addRepository(IRepository repository) {
+		repositoryList.add(repository);
 	}
 
 	public IRepository getRepository(int index) {
 		return repositoryList.get(index);
+	}
+
+	@Override
+	public List<IRepository> getList() {
+		return repositoryList;
 	}
 
 }

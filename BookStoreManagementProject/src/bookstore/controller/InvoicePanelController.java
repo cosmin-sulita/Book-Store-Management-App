@@ -18,6 +18,7 @@ import bookstore.model.IBookStore;
 import bookstore.model.IInvoice;
 import bookstore.model.IProduct;
 import bookstore.model.ISupplierRepository;
+import bookstore.model.Invoice;
 import bookstore.model.MyTableModel;
 import bookstore.view.AddInvoicePanel;
 import bookstore.view.BookStoreInterface;
@@ -175,10 +176,12 @@ public class InvoicePanelController implements Serializable {
 		}
 	}
 
-	public void clearInvoice(AddInvoicePanel aip, IInvoice invoice) {
-		Collection<IProduct> c = invoice.getProductList();
-		invoice.getProductList().removeAll(c);
+	public void clearInvoicePanel(AddInvoicePanel aip, IInvoice invoice) {
+		invoice.removeAllProducts();
+		invoice.resetValue();
+		setInvoiceNumber(aip);
 		updateInvoiceTable(aip, invoice);
+		aip.setTextFieldInvoiceValue(invoice.getValueAsString());
 	}
 
 }

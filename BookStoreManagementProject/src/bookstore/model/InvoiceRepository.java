@@ -36,4 +36,14 @@ public class InvoiceRepository implements IInvoiceRepository, IRepository {
 		return total;
 	}
 
+	@Override
+	public IInvoice getInvoiceByNumber(String invoiceNumber) {
+		for (IInvoice invoice : invoiceList) {
+			if (invoice.getInvoiceNumberAsString().toLowerCase().equals(invoiceNumber.toLowerCase())) {
+				return invoice;
+			}
+		}
+		return null;
+	}
+
 }
