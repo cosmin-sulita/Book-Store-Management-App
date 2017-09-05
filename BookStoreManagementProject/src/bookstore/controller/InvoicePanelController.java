@@ -135,7 +135,9 @@ public class InvoicePanelController implements Serializable {
 					}
 				}
 			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(screen, "Price is not a number!");
+				JOptionPane.showMessageDialog(screen, "Price must be a number!");
+			} catch (NullPointerException e) {
+				JOptionPane.showMessageDialog(screen, "No book selected");
 			}
 		} else {
 			JOptionPane.showMessageDialog(screen, "Please fill out price fields");
