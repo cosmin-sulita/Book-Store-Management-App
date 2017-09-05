@@ -10,7 +10,6 @@ public class Invoice implements IInvoice {
 	private static final long serialVersionUID = 1L;
 
 	private int invoiceNumber;
-	private Date date;
 	private ISupplier supplier;
 	private List<IProduct> productList;
 	private boolean rebate;
@@ -18,26 +17,14 @@ public class Invoice implements IInvoice {
 
 	public Invoice() {
 		this.invoiceNumber = 0;
-		this.date = null;
 		this.supplier = null;
 		this.productList = new ArrayList<IProduct>();
 		this.rebate = false;
 		this.invoiceValue = 0.0;
 	}
 
-	public Invoice(int invoiceNumber, Date date, ISupplier supplier, List<IProduct> productList, boolean rebate,
+	public Invoice(int invoiceNumber, ISupplier supplier, List<IProduct> productList, boolean rebate,
 			double invoiceValue) {
-		super();
-		this.invoiceNumber = invoiceNumber;
-		this.date = date;
-		this.supplier = supplier;
-		this.productList = productList;
-		this.rebate = rebate;
-		this.invoiceValue = invoiceValue;
-	}
-
-	public Invoice(int invoiceNumber, ISupplier supplier, List<IProduct> productList, double invoiceValue,
-			boolean rebate) {
 		super();
 		this.invoiceNumber = invoiceNumber;
 		this.supplier = supplier;

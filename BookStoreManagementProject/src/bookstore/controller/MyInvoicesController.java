@@ -13,7 +13,6 @@ import bookstore.model.IInvoice;
 import bookstore.model.IInvoiceRepository;
 import bookstore.model.IProduct;
 import bookstore.model.ISupplier;
-import bookstore.model.Invoice;
 import bookstore.model.MyTableModel;
 import bookstore.view.AddInvoicePanel;
 import bookstore.view.BookStoreInterface;
@@ -48,7 +47,7 @@ public class MyInvoicesController implements Serializable {
 			IInvoiceBuilder invoiceBuilder;
 
 			invoiceBuilder = new InvoiceBuilder();
-			newInvoice = new Invoice(invoiceNumber, supplier, productList, invoiceValue, rebate);
+			newInvoice = invoiceBuilder.build(invoiceNumber, supplier, productList, rebate, invoiceValue);
 
 			invoiceRepository.addInvoiceToList(newInvoice);
 

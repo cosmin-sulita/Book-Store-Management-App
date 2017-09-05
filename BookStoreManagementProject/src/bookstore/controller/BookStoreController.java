@@ -199,7 +199,7 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 				finalRepository = (FinalRepository) in.readObject();
 				bookStore = (BookStore) finalRepository.getRepository(0);
 				supplierRepository = (SupplierRepository) finalRepository.getRepository(1);
-				// invoiceRepository = (InvoiceRepository) finalRepository.getRepository(2);
+				invoiceRepository = (InvoiceRepository) finalRepository.getRepository(2);
 
 				in.close();
 			} catch (IOException e) {

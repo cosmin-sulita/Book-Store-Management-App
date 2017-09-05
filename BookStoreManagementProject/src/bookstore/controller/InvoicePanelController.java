@@ -1,10 +1,10 @@
 package bookstore.controller;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 
@@ -18,7 +18,6 @@ import bookstore.model.IBookStore;
 import bookstore.model.IInvoice;
 import bookstore.model.IProduct;
 import bookstore.model.ISupplierRepository;
-import bookstore.model.Invoice;
 import bookstore.model.MyTableModel;
 import bookstore.view.AddInvoicePanel;
 import bookstore.view.BookStoreInterface;
@@ -63,7 +62,9 @@ public class InvoicePanelController implements Serializable {
 	}
 
 	public void setInvoiceValue(AddInvoicePanel aip, double totalAmmount) {
-		aip.setTextFieldInvoiceValue(String.valueOf(totalAmmount));
+		String formattedValue;
+		formattedValue = String.valueOf(Double.parseDouble(new DecimalFormat("##.##").format(totalAmmount)));
+		aip.setTextFieldInvoiceValue(formattedValue);
 	}
 
 	public void setRebatePricing(AddInvoicePanel aip) {

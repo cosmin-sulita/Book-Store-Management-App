@@ -1,5 +1,7 @@
 package bookstore.model;
 
+import java.text.DecimalFormat;
+
 public class Product implements IProduct {
 
 	private static final long serialVersionUID = 1L;
@@ -20,7 +22,7 @@ public class Product implements IProduct {
 	}
 
 	private double calculateTotalPrice() {
-		return supplierPrice * quantity;
+		return Double.parseDouble(new DecimalFormat("##.##").format(supplierPrice * quantity));
 	}
 
 	public IBook getBook() {

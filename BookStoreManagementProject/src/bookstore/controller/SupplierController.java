@@ -13,7 +13,6 @@ import bookstore.model.ISupplier;
 import bookstore.model.ISupplierRepository;
 import bookstore.view.AddInvoicePanel;
 import bookstore.view.AddSupplierFrame;
-import bookstore.view.BookStoreInterface;
 
 public class SupplierController implements Serializable {
 
