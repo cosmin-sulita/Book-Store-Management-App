@@ -164,7 +164,7 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 			invoicePanelController.clearInvoicePanel(aip, invoice);
 			bookController.updateBookTable(bsp, bookStore);
 		} else if (event.getSource() == bsp.getButtonDeleteBook()) {
-			bookController.removeBookFromStore(screen, abf, aip, bsp, bookStore);
+			bookController.removeBookFromStore(aip, bsp, bookStore);
 		} else if (event.getSource() == bsp.getButtonSearchBook()) {
 			bookController.searchBook(bsp, bookStore);
 		} else if (event.getSource() == bsp.getButtonSellBook()) {

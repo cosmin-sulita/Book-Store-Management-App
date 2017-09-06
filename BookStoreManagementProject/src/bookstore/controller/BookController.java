@@ -16,7 +16,6 @@ import bookstore.model.IProduct;
 import bookstore.model.MyTableModel;
 import bookstore.view.AddBookFrame;
 import bookstore.view.AddInvoicePanel;
-import bookstore.view.BookStoreInterface;
 import bookstore.view.BrowseStorePanel;
 
 public class BookController implements Serializable {
@@ -82,24 +81,13 @@ public class BookController implements Serializable {
 		}
 	}
 
-	public void removeBookFromStore(BookStoreInterface screen, AddBookFrame abf, AddInvoicePanel aip,
-			BrowseStorePanel bsp, IBookStore bookStore) {
-		int row;
-		int column;
-		String isbn;
+	public void removeBookFromStore(AddInvoicePanel aip, BrowseStorePanel bsp, IBookStore bookStore) {
 		IBook book;
 
-		try {
-			row = ((JTable) bsp.getBookTable()).getSelectedRow();
-			column = 5;
-			isbn = ((JTable) bsp.getBookTable()).getValueAt(row, column).toString();
-			book = bookStore.getBookByISBN(isbn);
-			bookStore.removeBook(book);
-			updateBookTable(bsp, bookStore);
-			aip.removeBookFromComboBox(book);
-		} catch (IndexOutOfBoundsException e) {
-			JOptionPane.showMessageDialog(screen, "No book selected");
-		}
+		book = getSelectedBook(bsp, bookStore);
+		bookStore.removeBook(book);
+		updateBookTable(bsp, bookStore);
+		aip.removeBookFromComboBox(book);
 
 	}
 
@@ -149,13 +137,13 @@ public class BookController implements Serializable {
 
 	private IBook getSelectedBook(BrowseStorePanel bsp, IBookStore bookStore) {
 		int row;
-		int column;
+		int isbnColumn;
 		String isbn;
 		IBook book;
 		try {
 			row = ((JTable) bsp.getBookTable()).getSelectedRow();
-			column = 5;
-			isbn = ((JTable) bsp.getBookTable()).getValueAt(row, column).toString();
+			isbnColumn = 5;
+			isbn = ((JTable) bsp.getBookTable()).getValueAt(row, isbnColumn).toString();
 			book = bookStore.getBookByISBN(isbn);
 			return book;
 		} catch (IndexOutOfBoundsException e) {
@@ -165,7 +153,6 @@ public class BookController implements Serializable {
 	}
 
 	public void sellBook(BrowseStorePanel bsp, IBookStore bookStore, IInvoiceRepository invoiceRepository) {
-
 		IBook book;
 		IProduct product;
 		IInvoice myInvoice;
