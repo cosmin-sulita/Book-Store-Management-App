@@ -8,6 +8,7 @@ public class InvoiceRepository implements IInvoiceRepository, IRepository {
 	private static final long serialVersionUID = 1L;
 
 	private List<IInvoice> invoiceList;
+	private double totalInvoiceValue;
 
 	public InvoiceRepository() {
 		invoiceList = new ArrayList<IInvoice>();
@@ -41,6 +42,48 @@ public class InvoiceRepository implements IInvoiceRepository, IRepository {
 		for (IInvoice invoice : invoiceList) {
 			if (invoice.getInvoiceNumberAsString().toLowerCase().equals(invoiceNumber.toLowerCase())) {
 				return invoice;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public List<IInvoice> getInvoiceList() {
+		return invoiceList;
+	}
+
+	@Override
+	public void calculateTotalInvoiceValue() {
+		totalInvoiceValue = 0;
+		for (IInvoice invoice : invoiceList) {
+			totalInvoiceValue += invoice.getValue();
+		}
+	}
+
+	@Override
+	public double getTotalInvoiceValue() {
+		return totalInvoiceValue;
+	}
+
+	@Override
+	public IProduct getProduct(IBook book) {
+		for (IInvoice invoice : invoiceList) {
+			for (IProduct product : invoice.getProductList()) {
+				if (product.getBookTitle().toLowerCase().equals(book.getTitle().toLowerCase())) {
+					return product;
+				}
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public IInvoice getInvoiceThatContains(IBook book) {
+		for (IInvoice invoice : invoiceList) {
+			for (IProduct product : invoice.getProductList()) {
+				if (product.getBookTitle().toLowerCase().equals(book.getTitle().toLowerCase())) {
+					return invoice;
+				}
 			}
 		}
 		return null;

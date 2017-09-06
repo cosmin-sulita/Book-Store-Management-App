@@ -160,10 +160,15 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 		} else if (event.getSource() == aip.getButtonRemoveBookFromInvoice()) {
 			invoicePanelController.removeBookFromInvoice(screen, aip, invoice);
 		} else if (event.getSource() == aip.getButtonSaveInvoice()) {
-			myInvoicesController.saveInvoice(aip, invoice, invoiceRepository, mip);
+			myInvoicesController.saveInvoice(aip, mip, invoice, invoiceRepository, bookStore);
 			invoicePanelController.clearInvoicePanel(aip, invoice);
+			bookController.updateBookTable(bsp, bookStore);
 		} else if (event.getSource() == bsp.getButtonDeleteBook()) {
 			bookController.removeBookFromStore(screen, abf, aip, bsp, bookStore);
+		} else if (event.getSource() == bsp.getButtonSearchBook()) {
+			bookController.searchBook(bsp, bookStore);
+		} else if (event.getSource() == bsp.getButtonSellBook()) {
+			bookController.sellBook(bsp, bookStore, invoiceRepository);
 		} else if (event.getSource() == bsp.getButtonSave()) {
 			save();
 		} else if (event.getSource() == bsp.getButtonSaveAndQuit()) {
@@ -178,6 +183,9 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 			saveAndQuit();
 		} else if (event.getSource() == mip.getButtonOpenInvoice()) {
 			myInvoicesController.openInvoice(screen, mip, invoiceRepository);
+		} else if (event.getSource() == mip.getButtonDeleteInvoice()) {
+			myInvoicesController.deleteInvoice(mip, invoice, invoiceRepository, bookStore);
+			bookController.updateBookTable(bsp, bookStore);
 		} else if (event.getSource() == mip.getButtonSave()) {
 			save();
 		} else if (event.getSource() == mip.getButtonSaveAndQuit()) {

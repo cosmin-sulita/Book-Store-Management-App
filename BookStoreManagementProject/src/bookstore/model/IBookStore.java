@@ -25,4 +25,18 @@ public interface IBookStore extends Serializable {
 
 	List<IBook> getBookList();
 
+	void removeBooksFromStock(IInvoice selectedInvoice, IBookStore bookStore);
+
+	void addBooksToStock(IInvoice newInvoice);
+
+	String[][] toStringVector(IBook foundBook);
+
+	void setBooksPrice(IInvoice newInvoice);
+
+	boolean hasCopiesOf(IBook book);
+
+	void sell(IBook book);
+
+	double getTotalIncome();
+
 }

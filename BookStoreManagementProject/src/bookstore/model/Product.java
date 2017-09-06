@@ -11,6 +11,7 @@ public class Product implements IProduct {
 	private double supplierPrice;
 	private double personalPrice;
 	private double totalPrice;
+	private int storeQuantity;
 
 	public Product(IBook book, int quantity, double supplierPrice, double personalPrice) {
 		super();
@@ -19,6 +20,7 @@ public class Product implements IProduct {
 		this.supplierPrice = supplierPrice;
 		this.personalPrice = personalPrice;
 		this.totalPrice = calculateTotalPrice();
+		this.storeQuantity = quantity;
 	}
 
 	private double calculateTotalPrice() {
@@ -37,6 +39,7 @@ public class Product implements IProduct {
 		return supplierPrice;
 	}
 
+	@Override
 	public double getPersonalPrice() {
 		return personalPrice;
 	}
@@ -68,6 +71,16 @@ public class Product implements IProduct {
 	@Override
 	public String getTotalPriceAsString() {
 		return String.valueOf(totalPrice);
+	}
+
+	@Override
+	public void decreaseStoreQuantity() {
+		storeQuantity -= 1;
+	}
+
+	@Override
+	public int getStoreQuantity() {
+		return storeQuantity;
 	}
 
 }

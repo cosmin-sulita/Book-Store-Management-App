@@ -9,6 +9,7 @@ import javax.swing.JTable;
 
 import bookstore.builders.IInvoiceBuilder;
 import bookstore.builders.InvoiceBuilder;
+import bookstore.model.IBookStore;
 import bookstore.model.IInvoice;
 import bookstore.model.IInvoiceRepository;
 import bookstore.model.IProduct;
@@ -22,8 +23,8 @@ public class MyInvoicesController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	public void saveInvoice(AddInvoicePanel aip, IInvoice invoice, IInvoiceRepository invoiceRepository,
-			MyInvoicesPanel mip) {
+	public void saveInvoice(AddInvoicePanel aip, MyInvoicesPanel mip, IInvoice invoice,
+			IInvoiceRepository invoiceRepository, IBookStore bookStore) {
 
 		int invoiceNumber;
 		List<IProduct> productList = new ArrayList<IProduct>();
@@ -49,9 +50,15 @@ public class MyInvoicesController implements Serializable {
 			invoiceBuilder = new InvoiceBuilder();
 			newInvoice = invoiceBuilder.build(invoiceNumber, supplier, productList, rebate, invoiceValue);
 
-			invoiceRepository.addInvoiceToList(newInvoice);
+			if (newInvoice.getProductList().isEmpty()) {
+				JOptionPane.showMessageDialog(aip, "Invoice is empty");
+			} else {
+				invoiceRepository.addInvoiceToList(newInvoice);
+			}
 
 			updateInvoicesTable(mip, invoiceRepository);
+			setTotalInvoicesValue(mip, invoiceRepository);
+			bookStore.addBooksToStock(newInvoice);
 		} catch (NullPointerException e) {
 			JOptionPane.showMessageDialog(aip, "Incomplete invoice");
 		}
@@ -67,6 +74,25 @@ public class MyInvoicesController implements Serializable {
 		for (int i = 0; i < dataInvoice.length; i++) {
 			((MyTableModel) mip.getInvoicesTable().getModel()).addRow(dataInvoice[i]);
 		}
+	}
+
+	public void updateBooksTable(MyInvoicesPanel mip, IInvoice invoice) {
+		String dataProduct[][];
+
+		while (((MyTableModel) mip.getBookTable().getModel()).getRowCount() > 0) {
+			((MyTableModel) mip.getBookTable().getModel()).removeRow(0);
+		}
+		dataProduct = invoice.toStringVector();
+		for (int i = 0; i < dataProduct.length; i++) {
+			((MyTableModel) mip.getBookTable().getModel()).addRow(dataProduct[i]);
+		}
+	}
+
+	private void setTotalInvoicesValue(MyInvoicesPanel mip, IInvoiceRepository invoiceRepository) {
+		double totalInvoiceValue;
+		invoiceRepository.calculateTotalInvoiceValue();
+		totalInvoiceValue = invoiceRepository.getTotalInvoiceValue();
+		mip.setTotalInvoiceValue(String.valueOf(totalInvoiceValue));
 	}
 
 	public void openInvoice(BookStoreInterface screen, MyInvoicesPanel mip, IInvoiceRepository invoiceRepository) {
@@ -86,15 +112,28 @@ public class MyInvoicesController implements Serializable {
 		}
 	}
 
-	public void updateBooksTable(MyInvoicesPanel mip, IInvoice invoice) {
-		String dataProduct[][];
+	public void deleteInvoice(MyInvoicesPanel mip, IInvoice invoice, IInvoiceRepository invoiceRepository,
+			IBookStore bookStore) {
+		int row;
+		int invoiceNumberColumn = 0;
+		String invoiceNumber;
+		IInvoice selectedInvoice;
 
-		while (((MyTableModel) mip.getBookTable().getModel()).getRowCount() > 0) {
-			((MyTableModel) mip.getBookTable().getModel()).removeRow(0);
-		}
-		dataProduct = invoice.toStringVector();
-		for (int i = 0; i < dataProduct.length; i++) {
-			((MyTableModel) mip.getBookTable().getModel()).addRow(dataProduct[i]);
+		try {
+			row = ((JTable) mip.getInvoicesTable()).getSelectedRow();
+			invoiceNumber = ((JTable) mip.getInvoicesTable()).getValueAt(row, invoiceNumberColumn).toString();
+
+			selectedInvoice = invoiceRepository.getInvoiceByNumber(invoiceNumber);
+			bookStore.removeBooksFromStock(selectedInvoice, bookStore);
+
+			invoiceRepository.removeInvoiceFromList(selectedInvoice);
+			updateInvoicesTable(mip, invoiceRepository);
+			setTotalInvoicesValue(mip, invoiceRepository);
+			selectedInvoice.removeAllProducts();
+			updateBooksTable(mip, selectedInvoice);
+		} catch (IndexOutOfBoundsException e) {
+			JOptionPane.showMessageDialog(mip, "No invoice selected");
 		}
 	}
+
 }

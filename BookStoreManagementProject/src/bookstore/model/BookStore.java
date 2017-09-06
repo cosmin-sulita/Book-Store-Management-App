@@ -10,6 +10,7 @@ public class BookStore implements IBookStore, IRepository {
 	private static final long serialVersionUID = 1L;
 
 	private List<IBook> bookList;
+	private double totalIncome;
 
 	public BookStore() {
 		bookList = new ArrayList<IBook>();
@@ -42,7 +43,7 @@ public class BookStore implements IBookStore, IRepository {
 				return book;
 			}
 		}
-		return null;
+		return new EmptyBook();
 	}
 
 	@Override
@@ -104,4 +105,70 @@ public class BookStore implements IBookStore, IRepository {
 		return bookList;
 	}
 
+	@Override
+	public void removeBooksFromStock(IInvoice selectedInvoice, IBookStore bookStore) {
+		for (IProduct product : selectedInvoice.getProductList()) {
+			for (IBook book : bookStore.getBookList()) {
+				if (book.getTitle() == product.getBookTitle() && book.getPublisher() == product.getBookPublisher()) {
+					book.removeStock(product.getQuantity());
+				}
+			}
+		}
+	}
+
+	@Override
+	public void addBooksToStock(IInvoice invoice) {
+		for (IProduct product : invoice.getProductList()) {
+			for (IBook book : bookList) {
+				if (book.getTitle() == product.getBookTitle() && book.getPublisher() == product.getBookPublisher()) {
+					book.addStock(product.getQuantity());
+				}
+			}
+		}
+	}
+
+	@Override
+	public String[][] toStringVector(IBook foundBook) {
+		String[][] total = new String[1][6];
+
+		total[0][0] = foundBook.getTitle();
+		total[0][1] = foundBook.getAuthor();
+		total[0][2] = foundBook.getPublisher();
+		total[0][3] = foundBook.getPrice();
+		total[0][4] = foundBook.getStock();
+		total[0][5] = foundBook.getISBN();
+
+		return total;
+	}
+
+	@Override
+	public void setBooksPrice(IInvoice invoice) {
+		for (IProduct product : invoice.getProductList()) {
+			for (IBook book : bookList) {
+				if (book.getTitle() == product.getBookTitle() && book.getPublisher() == product.getBookPublisher()) {
+					book.setPrice(product.getPersonalPrice());
+				}
+			}
+		}
+	}
+
+	@Override
+	public boolean hasCopiesOf(IBook book) {
+		if (book.getStockAsInt() != 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	@Override
+	public void sell(IBook book) {
+		book.removeStock(1);
+		totalIncome += Double.parseDouble(book.getPrice());
+	}
+
+	@Override
+	public double getTotalIncome() {
+		return totalIncome;
+	}
 }

@@ -3,7 +3,7 @@ package bookstore.model;
 public class EmptyBook implements IBook {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private String title;
 	private String author;
 	private String publisher;
@@ -59,6 +59,28 @@ public class EmptyBook implements IBook {
 	@Override
 	public String toString() {
 		return title;
+	}
+
+	@Override
+	public void addStock(int quantity) {
+
+	}
+
+	@Override
+	public void removeStock(int quantity) {
+
+	}
+
+	@Override
+	public void setPrice(double personalPrice) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public int getStockAsInt() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

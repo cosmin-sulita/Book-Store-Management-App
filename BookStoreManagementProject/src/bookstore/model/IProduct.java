@@ -16,4 +16,12 @@ public interface IProduct extends Serializable {
 
 	double getTotalPrice();
 
+	int getQuantity();
+
+	double getPersonalPrice();
+
+	void decreaseStoreQuantity();
+
+	int getStoreQuantity();
+
 }

@@ -18,4 +18,12 @@ public interface IBook extends Serializable {
 
 	String getISBN();
 
+	void addStock(int quantity);
+
+	void removeStock(int quantity);
+
+	void setPrice(double personalPrice);
+
+	int getStockAsInt();
+
 }

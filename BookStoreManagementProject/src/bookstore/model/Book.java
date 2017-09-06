@@ -61,4 +61,24 @@ public class Book implements IBook {
 		return title;
 	}
 
+	@Override
+	public void addStock(int quantity) {
+		stock += quantity;
+	}
+
+	@Override
+	public void removeStock(int quantity) {
+		stock -= quantity;
+	}
+
+	@Override
+	public void setPrice(double personalPrice) {
+		price = personalPrice;
+	}
+
+	@Override
+	public int getStockAsInt() {
+		return stock;
+	}
+
 }

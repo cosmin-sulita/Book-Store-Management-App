@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
 
 import javax.swing.Box;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,11 +26,14 @@ public class BrowseStorePanel extends JPanel {
 	private Box hBox4;
 	private Box hBox5;
 
+	private JLabel jlSearchBook;
 	private JLabel jlBookTable;
 	private JLabel jlTotalIncome;
 
 	private JTextField jtTotalIncome;
+	private JTextField jtSearchBook;
 
+	private JButton bSearchBook;
 	private JButton bSellBook;
 	private JButton bDeleteBook;
 	private JButton bSave;
@@ -58,13 +62,18 @@ public class BrowseStorePanel extends JPanel {
 		hBox4 = Box.createHorizontalBox();
 		hBox5 = Box.createHorizontalBox();
 
+		jlSearchBook = new JLabel("Search Book");
 		jlBookTable = new JLabel("Showing All Books in Library");
 		jlTotalIncome = new JLabel("Total income");
 
+		jtSearchBook = new JTextField();
 		jtTotalIncome = new JTextField();
 		jtTotalIncome.setHorizontalAlignment(JTextField.CENTER);
 		jtTotalIncome.setEditable(false);
 
+		ImageIcon seachIcon = new ImageIcon("search.png");
+
+		bSearchBook = new JButton(seachIcon);
 		bSellBook = new JButton("Sell");
 		bDeleteBook = new JButton("Delete");
 		bSave = new JButton("Save");
@@ -89,21 +98,28 @@ public class BrowseStorePanel extends JPanel {
 	}
 
 	private void addWidgets() {
-		hBox1.add(jlBookTable);
-		hBox1.add(Box.createHorizontalStrut(170));
-		hBox1.add(bDeleteBook);
-		hBox1.add(Box.createHorizontalStrut(5));
-		hBox1.add(bSellBook);
+		hBox1.add(jlSearchBook);
+		hBox1.add(Box.createHorizontalStrut(10));
+		hBox1.add(jtSearchBook);
+		hBox1.add(Box.createHorizontalStrut(10));
+		hBox1.add(bSearchBook);
 
-		hBox2.add(spBookTable);
+		hBox2.add(jlBookTable);
+		hBox2.add(Box.createHorizontalStrut(170));
+		hBox2.add(bDeleteBook);
+		hBox2.add(Box.createHorizontalStrut(5));
+		hBox2.add(bSellBook);
+
+		hBox3.add(spBookTable);
 
 		hBox5.add(bSave);
 		hBox5.add(Box.createHorizontalStrut(5));
 		hBox5.add(bSaveAndQuit);
 		hBox5.add(Box.createHorizontalStrut(100));
 		hBox5.add(jlTotalIncome);
-		hBox5.add(Box.createHorizontalStrut(5));
+		hBox5.add(Box.createHorizontalStrut(10));
 		hBox5.add(jtTotalIncome);
+		hBox5.add(Box.createHorizontalStrut(10));
 
 		mainBox.add(hBox1);
 		mainBox.add(Box.createVerticalStrut(5));
@@ -123,6 +139,7 @@ public class BrowseStorePanel extends JPanel {
 		bDeleteBook.addActionListener(a);
 		bSave.addActionListener(a);
 		bSaveAndQuit.addActionListener(a);
+		bSearchBook.addActionListener(a);
 	}
 
 	public JButton getButtonSellBook() {
@@ -143,6 +160,18 @@ public class BrowseStorePanel extends JPanel {
 
 	public JTable getBookTable() {
 		return tBooks;
+	}
+
+	public JButton getButtonSearchBook() {
+		return bSearchBook;
+	}
+
+	public String getSearchedBook() {
+		return jtSearchBook.getText().trim();
+	}
+
+	public void setTextTotalIncome(String totalIncome) {
+		jtTotalIncome.setText(totalIncome);
 	}
 
 }

@@ -27,9 +27,9 @@ public class MyInvoicesPanel extends JPanel {
 
 	private JLabel jlInvoiceTable;
 	private JLabel jlBookTable;
-	private JLabel jlTotalIncome;
+	private JLabel jlTotalInvoices;
 
-	private JTextField jtTotalIncome;
+	private JTextField jtTotalInvoices;
 
 	private JButton bOpenInvoice;
 	private JButton bDeleteInvoice;
@@ -66,11 +66,11 @@ public class MyInvoicesPanel extends JPanel {
 
 		jlInvoiceTable = new JLabel("Showing All Invoices To Pay");
 		jlBookTable = new JLabel("Showing All Books From Invoice");
-		jlTotalIncome = new JLabel("Total income");
+		jlTotalInvoices = new JLabel("Total invoices");
 
-		jtTotalIncome = new JTextField();
-		jtTotalIncome.setHorizontalAlignment(JTextField.CENTER);
-		jtTotalIncome.setEditable(false);
+		jtTotalInvoices = new JTextField();
+		jtTotalInvoices.setHorizontalAlignment(JTextField.CENTER);
+		jtTotalInvoices.setEditable(false);
 
 		bOpenInvoice = new JButton("Open");
 		bDeleteInvoice = new JButton("Delete");
@@ -127,9 +127,9 @@ public class MyInvoicesPanel extends JPanel {
 		hBox5.add(Box.createHorizontalStrut(5));
 		hBox5.add(bSaveAndQuit);
 		hBox5.add(Box.createHorizontalStrut(100));
-		hBox5.add(jlTotalIncome);
-		hBox5.add(Box.createHorizontalStrut(5));
-		hBox5.add(jtTotalIncome);
+		hBox5.add(jlTotalInvoices);
+		hBox5.add(Box.createHorizontalStrut(10));
+		hBox5.add(jtTotalInvoices);
 
 		mainBox.add(hBox1);
 		mainBox.add(Box.createVerticalStrut(5));
@@ -151,7 +151,7 @@ public class MyInvoicesPanel extends JPanel {
 		bSaveAndQuit.addActionListener(a);
 	}
 
-	public JButton getButtonDeleteBook() {
+	public JButton getButtonDeleteInvoice() {
 		return bDeleteInvoice;
 	}
 
@@ -173,6 +173,10 @@ public class MyInvoicesPanel extends JPanel {
 
 	public JTable getBookTable() {
 		return tBooks;
+	}
+
+	public void setTotalInvoiceValue(String value) {
+		jtTotalInvoices.setText(value);
 	}
 
 }
