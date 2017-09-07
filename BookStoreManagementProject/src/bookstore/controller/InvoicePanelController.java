@@ -87,7 +87,7 @@ public class InvoicePanelController implements Serializable {
 		IProduct product;
 		IProductBuilder productBuilder;
 
-		if (aip.getCheckBoxRebate().isSelected()) {
+		if (aip.rebateIsSelected()) {
 			if (!aip.getTextFieldSupplierPrice().contentEquals("") && !aip.getTextFieldQuantity().contentEquals("")) {
 				AllFieldsAreFilled = true;
 			}

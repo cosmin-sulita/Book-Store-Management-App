@@ -142,14 +142,19 @@ public class BookStore implements IBookStore, IRepository {
 	}
 
 	@Override
-	public void setBooksPrice(IInvoice invoice) {
-		for (IProduct product : invoice.getProductList()) {
-			for (IBook book : bookList) {
-				if (book.getTitle() == product.getBookTitle() && book.getPublisher() == product.getBookPublisher()) {
-					book.setPrice(product.getPersonalPrice());
+	public void setBooksPrice(IInvoiceRepository invoiceRepository) {
+		int i;
+		for (i = invoiceRepository.getInvoiceList().size() - 1; i >= 0; i--) {
+			for (IProduct product : invoiceRepository.getInvoiceList().get(i).getProductList()) {
+				for (IBook book : bookList) {
+					if (book.getTitle() == product.getBookTitle()
+							&& book.getPublisher() == product.getBookPublisher()) {
+						book.setPrice(product.getPersonalPrice());
+					}
 				}
 			}
 		}
+
 	}
 
 	@Override
@@ -170,5 +175,39 @@ public class BookStore implements IBookStore, IRepository {
 	@Override
 	public double getTotalIncome() {
 		return totalIncome;
+	}
+
+	@Override
+	public int getIndexOf(IBook book) {
+		return bookList.indexOf(book);
+	}
+
+	@Override
+	public String[][] toStringVectorForAvailableBooks() {
+		int size = getAvailableBooksNumber();
+		String[][] total = new String[size][6];
+		int j = 0;
+		for (int i = 0; i < bookList.size(); i++) {
+			if (bookList.get(i).getStockAsInt() > 0) {
+				total[j][0] = bookList.get(i).getTitle();
+				total[j][1] = bookList.get(i).getAuthor();
+				total[j][2] = bookList.get(i).getPublisher();
+				total[j][3] = bookList.get(i).getPrice();
+				total[j][4] = bookList.get(i).getStock();
+				total[j][5] = bookList.get(i).getISBN();
+				j++;
+			}
+		}
+		return total;
+	}
+
+	private int getAvailableBooksNumber() {
+		int number = 0;
+		for (IBook book : bookList) {
+			if (book.getStockAsInt() > 0) {
+				number++;
+			}
+		}
+		return number;
 	}
 }

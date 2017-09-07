@@ -417,4 +417,8 @@ public class AddInvoicePanel extends JPanel {
 		return jtInvoiceNo.getText().trim();
 	}
 
+	public boolean rebateIsSelected() {
+		return cbRebate.isSelected();
+	}
+
 }

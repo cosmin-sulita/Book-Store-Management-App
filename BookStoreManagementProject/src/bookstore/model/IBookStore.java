@@ -31,12 +31,16 @@ public interface IBookStore extends Serializable {
 
 	String[][] toStringVector(IBook foundBook);
 
-	void setBooksPrice(IInvoice newInvoice);
-
 	boolean hasCopiesOf(IBook book);
 
 	void sell(IBook book);
 
 	double getTotalIncome();
+
+	int getIndexOf(IBook book);
+
+	void setBooksPrice(IInvoiceRepository invoiceRepository);
+
+	String[][] toStringVectorForAvailableBooks();
 
 }

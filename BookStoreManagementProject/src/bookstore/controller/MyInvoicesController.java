@@ -59,6 +59,7 @@ public class MyInvoicesController implements Serializable {
 			updateInvoicesTable(mip, invoiceRepository);
 			setTotalInvoicesValue(mip, invoiceRepository);
 			bookStore.addBooksToStock(newInvoice);
+			bookStore.setBooksPrice(invoiceRepository);
 		} catch (NullPointerException e) {
 			JOptionPane.showMessageDialog(aip, "Incomplete invoice");
 		}

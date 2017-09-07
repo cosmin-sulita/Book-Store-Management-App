@@ -46,7 +46,7 @@ public class MyInvoicesPanel extends JPanel {
 	String[] invoiceColumns = { "Invoice", "Supplier", "Value", "Rebate", "Payment" };
 	String[][] invoiceData = { { " ", " ", " ", " ", " " } };
 
-	String[] bookColumns = { "Book", "Publisher", "Qty", "Price", "Total" };
+	String[] bookColumns = { "Book", "Publisher", "Qty", "B.Price", "S.Price", "Total" };
 	String[][] bookData = { { " ", " ", " ", " ", " " } };
 
 	public MyInvoicesPanel() {
@@ -99,10 +99,11 @@ public class MyInvoicesPanel extends JPanel {
 		tBooks.setFillsViewportHeight(true);
 		tBooks.setAutoCreateRowSorter(true);
 		tBooks.getTableHeader().setReorderingAllowed(false);
-		tBooks.getColumnModel().getColumn(0).setPreferredWidth(140);
-		tBooks.getColumnModel().getColumn(1).setPreferredWidth(120);
+		tBooks.getColumnModel().getColumn(0).setPreferredWidth(100);
+		tBooks.getColumnModel().getColumn(1).setPreferredWidth(80);
 		tBooks.getColumnModel().getColumn(2).setPreferredWidth(25);
 		tBooks.getColumnModel().getColumn(3).setPreferredWidth(40);
+		tBooks.getColumnModel().getColumn(4).setPreferredWidth(40);
 		spBookTable = new JScrollPane(tBooks);
 
 		spBookTable.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);

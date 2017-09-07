@@ -34,6 +34,7 @@ public class BrowseStorePanel extends JPanel {
 	private JTextField jtSearchBook;
 
 	private JButton bSearchBook;
+	private JButton bShowAvailableBooks;
 	private JButton bSellBook;
 	private JButton bDeleteBook;
 	private JButton bSave;
@@ -72,8 +73,10 @@ public class BrowseStorePanel extends JPanel {
 		jtTotalIncome.setEditable(false);
 
 		ImageIcon seachIcon = new ImageIcon("search.png");
+		ImageIcon bookIcon = new ImageIcon("book.png");
 
 		bSearchBook = new JButton(seachIcon);
+		bShowAvailableBooks = new JButton(bookIcon);
 		bSellBook = new JButton("Sell");
 		bDeleteBook = new JButton("Delete");
 		bSave = new JButton("Save");
@@ -105,7 +108,9 @@ public class BrowseStorePanel extends JPanel {
 		hBox1.add(bSearchBook);
 
 		hBox2.add(jlBookTable);
-		hBox2.add(Box.createHorizontalStrut(170));
+		hBox2.add(Box.createHorizontalStrut(110));
+		hBox2.add(bShowAvailableBooks);
+		hBox2.add(Box.createHorizontalStrut(5));
 		hBox2.add(bDeleteBook);
 		hBox2.add(Box.createHorizontalStrut(5));
 		hBox2.add(bSellBook);
@@ -140,6 +145,7 @@ public class BrowseStorePanel extends JPanel {
 		bSave.addActionListener(a);
 		bSaveAndQuit.addActionListener(a);
 		bSearchBook.addActionListener(a);
+		bShowAvailableBooks.addActionListener(a);
 	}
 
 	public JButton getButtonSellBook() {
@@ -172,6 +178,14 @@ public class BrowseStorePanel extends JPanel {
 
 	public void setTextTotalIncome(String totalIncome) {
 		jtTotalIncome.setText(totalIncome);
+	}
+
+	public JButton getButtonShowAvailableBooks() {
+		return bShowAvailableBooks;
+	}
+
+	public void clearSearchTextField() {
+		jtSearchBook.setText("");
 	}
 
 }

@@ -83,4 +83,9 @@ public class Product implements IProduct {
 		return storeQuantity;
 	}
 
+	@Override
+	public String getPersonalPriceAsString() {
+		return String.valueOf(personalPrice);
+	}
+
 }

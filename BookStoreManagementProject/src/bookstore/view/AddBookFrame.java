@@ -166,7 +166,7 @@ public class AddBookFrame extends JFrame {
 		return bSaveAndQuit;
 	}
 
-	public String getTextFieldIsbn() {
+	public String getIsbn() {
 		return jtIsbn.getText().trim();
 	}
 
@@ -174,7 +174,7 @@ public class AddBookFrame extends JFrame {
 		jtIsbn.setText(string);
 	}
 
-	public String getTextFieldTitle() {
+	public String getTitle() {
 		return jtTitle.getText().trim();
 	}
 
@@ -182,7 +182,7 @@ public class AddBookFrame extends JFrame {
 		jtTitle.setText(string);
 	}
 
-	public String getTextFieldAuthor() {
+	public String getAuthor() {
 		return jtAuthor.getText().trim();
 	}
 
@@ -190,7 +190,7 @@ public class AddBookFrame extends JFrame {
 		jtAuthor.setText(string);
 	}
 
-	public String getTextFieldPublisher() {
+	public String getPublisher() {
 		return jtPublisher.getText().trim();
 	}
 
@@ -204,6 +204,22 @@ public class AddBookFrame extends JFrame {
 
 	public void appendLog(String text) {
 		jtaLog.append(text);
+	}
+
+	public boolean isbnFieldIsEmpty() {
+		return jtIsbn.getText().trim().contentEquals("");
+	}
+
+	public boolean titleFieldIsEmpty() {
+		return jtTitle.getText().trim().contentEquals("");
+	}
+
+	public boolean authorFieldIsEmpty() {
+		return jtAuthor.getText().trim().contentEquals("");
+	}
+
+	public boolean publisherFieldIsEmpty() {
+		return jtPublisher.getText().trim().contentEquals("");
 	}
 
 }

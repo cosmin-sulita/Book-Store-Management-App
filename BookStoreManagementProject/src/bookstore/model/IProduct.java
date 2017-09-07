@@ -24,4 +24,6 @@ public interface IProduct extends Serializable {
 
 	int getStoreQuantity();
 
+	String getPersonalPriceAsString();
+
 }

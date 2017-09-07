@@ -41,7 +41,8 @@ public class Invoice implements IInvoice {
 			total[i][1] = productList.get(i).getBookPublisher();
 			total[i][2] = productList.get(i).getQuantityAsString();
 			total[i][3] = productList.get(i).getSupplierPriceAsString();
-			total[i][4] = productList.get(i).getTotalPriceAsString();
+			total[i][4] = productList.get(i).getPersonalPriceAsString();
+			total[i][5] = productList.get(i).getTotalPriceAsString();
 		}
 		return total;
 	}

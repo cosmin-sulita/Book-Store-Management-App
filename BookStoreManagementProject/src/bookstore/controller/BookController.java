@@ -38,23 +38,23 @@ public class BookController implements Serializable {
 		IBook book;
 		IBookBuilder bookBuilder;
 
-		if (!abf.getTextFieldIsbn().contentEquals("") && !abf.getTextFieldTitle().contentEquals("")
-				&& !abf.getTextFieldAuthor().contentEquals("") && !abf.getTextFieldPublisher().contentEquals("")) {
+		if (!abf.isbnFieldIsEmpty() && !abf.titleFieldIsEmpty() && !abf.authorFieldIsEmpty()
+				&& !abf.publisherFieldIsEmpty()) {
 			AllFieldsAreFilled = true;
 		}
 
 		if (AllFieldsAreFilled) {
 			try {
-				isbn = Integer.parseInt(abf.getTextFieldIsbn());
+				isbn = Integer.parseInt(abf.getIsbn());
 
 				ISBNAlreadyExist = bookStore.doesISBNAlreadyExist(isbn);
 				if (ISBNAlreadyExist) {
 					JOptionPane.showMessageDialog(abf, isbn + " already exist!\nPlease use another isbn!");
 				} else {
 
-					title = abf.getTextFieldTitle();
-					author = abf.getTextFieldAuthor();
-					publisher = abf.getTextFieldPublisher();
+					title = abf.getTitle();
+					author = abf.getAuthor();
+					publisher = abf.getPublisher();
 
 					bookBuilder = new BookBuilder();
 					book = bookBuilder.build(title, author, publisher, isbn, stock, price);
@@ -62,7 +62,7 @@ public class BookController implements Serializable {
 					bookStore.addBook(book);
 					bookStore.sortBookListAlphabetically();
 
-					newBookIndex = bookStore.getBookList().indexOf(book);
+					newBookIndex = bookStore.getIndexOf(book);
 					aip.insertBookInComboBox(book, newBookIndex);
 
 					abf.setTextFieldIsbn("");
@@ -88,7 +88,6 @@ public class BookController implements Serializable {
 		bookStore.removeBook(book);
 		updateBookTable(bsp, bookStore);
 		aip.removeBookFromComboBox(book);
-
 	}
 
 	public void updateBookTable(BrowseStorePanel bsp, IBookStore bookStore) {
@@ -127,7 +126,7 @@ public class BookController implements Serializable {
 				for (int i = 0; i < dataBook.length; i++) {
 					((MyTableModel) bsp.getBookTable().getModel()).addRow(dataBook[i]);
 				}
-
+				bsp.clearSearchTextField();
 			} catch (NullPointerException e) {
 				JOptionPane.showMessageDialog(bsp, "Book not found");
 				updateBookTable(bsp, bookStore);
@@ -160,7 +159,6 @@ public class BookController implements Serializable {
 		book = getSelectedBook(bsp, bookStore);
 		myInvoice = invoiceRepository.getInvoiceThatContains(book);
 		product = invoiceRepository.getProduct(book);
-		book.setPrice(product.getPersonalPrice());
 
 		if (bookStore.hasCopiesOf(book)) {
 			bookStore.sell(book);
@@ -168,17 +166,35 @@ public class BookController implements Serializable {
 			if (product.getStoreQuantity() == 0) {
 				myInvoice.removeProductFromList(product);
 			}
+			bookStore.setBooksPrice(invoiceRepository);
+
 			updateBookTable(bsp, bookStore);
+			searchBook(bsp, bookStore);
 			updateTotalIncome(bsp, bookStore);
 		} else {
 			JOptionPane.showMessageDialog(bsp, "No more copies");
+			book.setPrice(0);
+			updateBookTable(bsp, bookStore);
 		}
+
 	}
 
 	private void updateTotalIncome(BrowseStorePanel bsp, IBookStore bookStore) {
 		String totalIncome;
 		totalIncome = String.valueOf(bookStore.getTotalIncome());
 		bsp.setTextTotalIncome(totalIncome);
+	}
+
+	public void showAvailableBooks(BrowseStorePanel bsp, IBookStore bookStore) {
+		String dataBook[][];
+
+		while (((MyTableModel) bsp.getBookTable().getModel()).getRowCount() > 0) {
+			((MyTableModel) bsp.getBookTable().getModel()).removeRow(0);
+		}
+		dataBook = bookStore.toStringVectorForAvailableBooks();
+		for (int i = 0; i < dataBook.length; i++) {
+			((MyTableModel) bsp.getBookTable().getModel()).addRow(dataBook[i]);
+		}
 	}
 
 }
