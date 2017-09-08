@@ -12,9 +12,9 @@ public interface IBook extends Serializable {
 
 	String getAuthor();
 
-	String getPrice();
+	String getPriceAsString();
 
-	String getStock();
+	String getStockAsString();
 
 	String getISBN();
 
@@ -24,6 +24,8 @@ public interface IBook extends Serializable {
 
 	void setPrice(double personalPrice);
 
-	int getStockAsInt();
+	int getStock();
+
+	double getPrice();
 
 }

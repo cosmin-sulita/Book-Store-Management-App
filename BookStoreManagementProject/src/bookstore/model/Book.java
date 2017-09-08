@@ -42,12 +42,12 @@ public class Book implements IBook {
 	}
 
 	@Override
-	public String getPrice() {
+	public String getPriceAsString() {
 		return String.valueOf(price);
 	}
 
 	@Override
-	public String getStock() {
+	public String getStockAsString() {
 		return String.valueOf(stock);
 	}
 
@@ -77,8 +77,13 @@ public class Book implements IBook {
 	}
 
 	@Override
-	public int getStockAsInt() {
+	public int getStock() {
 		return stock;
+	}
+
+	@Override
+	public double getPrice() {
+		return price;
 	}
 
 }

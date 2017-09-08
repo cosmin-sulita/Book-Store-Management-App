@@ -35,4 +35,8 @@ public interface IInvoice extends Serializable {
 
 	void resetValue();
 
+	boolean isEmpty();
+
+	void decreaseInvoiceValue(double price);
+
 }

@@ -11,26 +11,29 @@ public class Invoice implements IInvoice {
 	private int invoiceNumber;
 	private ISupplier supplier;
 	private List<IProduct> productList;
-	private boolean rebate;
+	private String rebate;
 	private double invoiceValue;
+	private IPayment paymentType;
 
 	public Invoice() {
+		super();
 		this.invoiceNumber = 0;
 		this.supplier = null;
 		this.productList = new ArrayList<IProduct>();
-		this.rebate = false;
-		this.invoiceValue = 0.0;
+		this.rebate = null;
+		this.invoiceValue = 0;
+		this.paymentType = null;
 	}
 
-	public Invoice(int invoiceNumber, ISupplier supplier, List<IProduct> productList, boolean rebate,
-			double invoiceValue) {
+	public Invoice(int invoiceNumber, ISupplier supplier, List<IProduct> productList, String rebate,
+			double invoiceValue, IPayment paymentType) {
 		super();
 		this.invoiceNumber = invoiceNumber;
 		this.supplier = supplier;
 		this.productList = productList;
 		this.invoiceValue = invoiceValue;
 		this.rebate = rebate;
-
+		this.paymentType = paymentType;
 	}
 
 	@Override
@@ -120,7 +123,7 @@ public class Invoice implements IInvoice {
 
 	@Override
 	public String getPaymentAsString() {
-		return "payment";
+		return paymentType.toString();
 	}
 
 	@Override
@@ -137,6 +140,28 @@ public class Invoice implements IInvoice {
 	@Override
 	public void resetValue() {
 		invoiceValue = 0;
+	}
+
+	@Override
+	public boolean isEmpty() {
+		return productList.isEmpty();
+	}
+
+	public IPayment getPaymentType() {
+		return paymentType;
+	}
+
+	public void setPaymentType(IPayment paymentType) {
+		this.paymentType = paymentType;
+	}
+
+	@Override
+	public void decreaseInvoiceValue(double price) {
+		if (invoiceValue < price) {
+			invoiceValue = 0;
+		} else {
+			invoiceValue -= price;
+		}
 	}
 
 }

@@ -84,8 +84,8 @@ public class BookStore implements IBookStore, IRepository {
 			total[i][0] = bookList.get(i).getTitle();
 			total[i][1] = bookList.get(i).getAuthor();
 			total[i][2] = bookList.get(i).getPublisher();
-			total[i][3] = bookList.get(i).getPrice();
-			total[i][4] = bookList.get(i).getStock();
+			total[i][3] = bookList.get(i).getPriceAsString();
+			total[i][4] = bookList.get(i).getStockAsString();
 			total[i][5] = bookList.get(i).getISBN();
 		}
 		return total;
@@ -134,8 +134,8 @@ public class BookStore implements IBookStore, IRepository {
 		total[0][0] = foundBook.getTitle();
 		total[0][1] = foundBook.getAuthor();
 		total[0][2] = foundBook.getPublisher();
-		total[0][3] = foundBook.getPrice();
-		total[0][4] = foundBook.getStock();
+		total[0][3] = foundBook.getPriceAsString();
+		total[0][4] = foundBook.getStockAsString();
 		total[0][5] = foundBook.getISBN();
 
 		return total;
@@ -159,7 +159,7 @@ public class BookStore implements IBookStore, IRepository {
 
 	@Override
 	public boolean hasCopiesOf(IBook book) {
-		if (book.getStockAsInt() != 0) {
+		if (book.getStock() != 0) {
 			return true;
 		} else {
 			return false;
@@ -169,7 +169,13 @@ public class BookStore implements IBookStore, IRepository {
 	@Override
 	public void sell(IBook book) {
 		book.removeStock(1);
-		totalIncome += Double.parseDouble(book.getPrice());
+		totalIncome += book.getPrice();
+	}
+	
+	@Override
+	public void sell(IBook book, double supplierPrice) {
+		book.removeStock(1);
+		totalIncome += book.getPrice() - supplierPrice;
 	}
 
 	@Override
@@ -188,12 +194,12 @@ public class BookStore implements IBookStore, IRepository {
 		String[][] total = new String[size][6];
 		int j = 0;
 		for (int i = 0; i < bookList.size(); i++) {
-			if (bookList.get(i).getStockAsInt() > 0) {
+			if (bookList.get(i).getStock() > 0) {
 				total[j][0] = bookList.get(i).getTitle();
 				total[j][1] = bookList.get(i).getAuthor();
 				total[j][2] = bookList.get(i).getPublisher();
-				total[j][3] = bookList.get(i).getPrice();
-				total[j][4] = bookList.get(i).getStock();
+				total[j][3] = bookList.get(i).getPriceAsString();
+				total[j][4] = bookList.get(i).getStockAsString();
 				total[j][5] = bookList.get(i).getISBN();
 				j++;
 			}
@@ -204,7 +210,7 @@ public class BookStore implements IBookStore, IRepository {
 	private int getAvailableBooksNumber() {
 		int number = 0;
 		for (IBook book : bookList) {
-			if (book.getStockAsInt() > 0) {
+			if (book.getStock() > 0) {
 				number++;
 			}
 		}

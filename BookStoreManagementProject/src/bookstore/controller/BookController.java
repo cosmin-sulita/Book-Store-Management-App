@@ -161,20 +161,26 @@ public class BookController implements Serializable {
 		product = invoiceRepository.getProduct(book);
 
 		if (bookStore.hasCopiesOf(book)) {
+
 			bookStore.sell(book);
+
 			product.decreaseStoreQuantity();
+
 			if (product.getStoreQuantity() == 0) {
 				myInvoice.removeProductFromList(product);
 			}
+
 			bookStore.setBooksPrice(invoiceRepository);
 
 			updateBookTable(bsp, bookStore);
 			searchBook(bsp, bookStore);
 			updateTotalIncome(bsp, bookStore);
+			showAvailableBooks(bsp, bookStore);
 		} else {
 			JOptionPane.showMessageDialog(bsp, "No more copies");
 			book.setPrice(0);
 			updateBookTable(bsp, bookStore);
+			showAvailableBooks(bsp, bookStore);
 		}
 
 	}

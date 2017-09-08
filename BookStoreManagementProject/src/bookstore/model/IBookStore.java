@@ -43,4 +43,6 @@ public interface IBookStore extends Serializable {
 
 	String[][] toStringVectorForAvailableBooks();
 
+	void sell(IBook book, double supplierPrice);
+
 }

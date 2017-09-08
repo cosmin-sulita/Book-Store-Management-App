@@ -421,4 +421,16 @@ public class AddInvoicePanel extends JPanel {
 		return cbRebate.isSelected();
 	}
 
+	public String getPaymentType() {
+		if (rbPayOnTerm.isSelected()) {
+			return "Pay on term";
+		} else {
+			return "Debt on the road";
+		}
+	}
+
+	public String getTerm() {
+		return jtTerm.getText().trim();
+	}
+
 }

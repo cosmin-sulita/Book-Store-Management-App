@@ -7,11 +7,15 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
+import bookstore.builders.DebtOnTheRoadPaymentBuilder;
 import bookstore.builders.IInvoiceBuilder;
+import bookstore.builders.IPaymentBuilder;
 import bookstore.builders.InvoiceBuilder;
+import bookstore.builders.PayOnTermPaymentBuilder;
 import bookstore.model.IBookStore;
 import bookstore.model.IInvoice;
 import bookstore.model.IInvoiceRepository;
+import bookstore.model.IPayment;
 import bookstore.model.IProduct;
 import bookstore.model.ISupplier;
 import bookstore.model.MyTableModel;
@@ -23,16 +27,22 @@ public class MyInvoicesController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final int REBATE_PERCENT = 15;
+
 	public void saveInvoice(AddInvoicePanel aip, MyInvoicesPanel mip, IInvoice invoice,
 			IInvoiceRepository invoiceRepository, IBookStore bookStore) {
 
 		int invoiceNumber;
 		List<IProduct> productList = new ArrayList<IProduct>();
 		ISupplier supplier;
-		boolean rebate;
+		String rebate;
 		double invoiceValue;
+		IPayment paymentType;
 
 		IInvoice newInvoice;
+		IInvoiceBuilder invoiceBuilder = new InvoiceBuilder();
+		IPaymentBuilder payOnTermPaymentBuilder = new PayOnTermPaymentBuilder();
+		IPaymentBuilder debtOnTheRoadPaymentBuilder = new DebtOnTheRoadPaymentBuilder();
 
 		try {
 			invoiceNumber = Integer.parseInt(aip.getTextFieldInvoiceNumber());
@@ -42,15 +52,24 @@ public class MyInvoicesController implements Serializable {
 				productList.add(product);
 			}
 
-			rebate = aip.getCheckBoxRebate().isSelected();
 			invoiceValue = invoice.getValue();
 
-			IInvoiceBuilder invoiceBuilder;
+			if (aip.rebateIsSelected()) {
+				invoiceValue = invoiceValue - invoiceValue * REBATE_PERCENT / 100;
+				rebate = "Yes";
+			} else {
+				rebate = "No";
+			}
 
-			invoiceBuilder = new InvoiceBuilder();
-			newInvoice = invoiceBuilder.build(invoiceNumber, supplier, productList, rebate, invoiceValue);
+			if (aip.getPaymentType() == "Pay on term") {
+				paymentType = payOnTermPaymentBuilder.build();
+			} else {
+				paymentType = debtOnTheRoadPaymentBuilder.build();
+			}
 
-			if (newInvoice.getProductList().isEmpty()) {
+			newInvoice = invoiceBuilder.build(invoiceNumber, supplier, productList, rebate, invoiceValue, paymentType);
+
+			if (newInvoice.isEmpty()) {
 				JOptionPane.showMessageDialog(aip, "Invoice is empty");
 			} else {
 				invoiceRepository.addInvoiceToList(newInvoice);
@@ -75,6 +94,7 @@ public class MyInvoicesController implements Serializable {
 		for (int i = 0; i < dataInvoice.length; i++) {
 			((MyTableModel) mip.getInvoicesTable().getModel()).addRow(dataInvoice[i]);
 		}
+		setTotalInvoicesValue(mip, invoiceRepository);
 	}
 
 	public void updateBooksTable(MyInvoicesPanel mip, IInvoice invoice) {

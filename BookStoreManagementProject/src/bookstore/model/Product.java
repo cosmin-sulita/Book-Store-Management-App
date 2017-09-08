@@ -35,6 +35,7 @@ public class Product implements IProduct {
 		return quantity;
 	}
 
+	@Override
 	public double getSupplierPrice() {
 		return supplierPrice;
 	}

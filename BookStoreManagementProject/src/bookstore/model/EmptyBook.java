@@ -42,32 +42,32 @@ public class EmptyBook implements IBook {
 	}
 
 	@Override
-	public String getPrice() {
-		return String.valueOf(price);
+	public String getPriceAsString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
-	public String getStock() {
-		return String.valueOf(stock);
+	public String getStockAsString() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public String getISBN() {
-		return String.valueOf(isbn);
-	}
-
-	@Override
-	public String toString() {
-		return title;
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
 	public void addStock(int quantity) {
+		// TODO Auto-generated method stub
 
 	}
 
 	@Override
 	public void removeStock(int quantity) {
+		// TODO Auto-generated method stub
 
 	}
 
@@ -78,9 +78,13 @@ public class EmptyBook implements IBook {
 	}
 
 	@Override
-	public int getStockAsInt() {
-		// TODO Auto-generated method stub
-		return 0;
+	public int getStock() {
+		return stock;
+	}
+
+	@Override
+	public double getPrice() {
+		return price;
 	}
 
 }
