@@ -100,6 +100,7 @@ public class BookController implements Serializable {
 		for (int i = 0; i < dataBook.length; i++) {
 			((MyTableModel) bsp.getBookTable().getModel()).addRow(dataBook[i]);
 		}
+		bsp.setTextTotalIncome(String.valueOf(bookStore.getTotalIncome()));
 	}
 
 	public void searchBook(BrowseStorePanel bsp, IBookStore bookStore) {
@@ -160,28 +161,29 @@ public class BookController implements Serializable {
 		myInvoice = invoiceRepository.getInvoiceThatContains(book);
 		product = invoiceRepository.getProduct(book);
 
-		if (bookStore.hasCopiesOf(book)) {
-			if (myInvoice.getPaymentAsString() == "Pay on term") {
-				bookStore.sell(book);
-				product.decreaseStoreQuantity();
-				if (product.getStoreQuantity() == 0) {
-					myInvoice.removeProductFromList(product);
-				}
-				bookStore.setBooksPrice(invoiceRepository);
-				updateBookTable(bsp, bookStore);
-				updateTotalIncome(bsp, bookStore);
-				showAvailableBooks(bsp, bookStore);
-			} else if (myInvoice.getPaymentAsString() == "Debt on the road") {
+		try {
+			if (bookStore.hasCopiesOf(book)) {
+				if (myInvoice.getPaymentAsString() == "Pay on term") {
+					bookStore.sell(book);
+					product.decreaseStoreQuantity();
+					if (product.getStoreQuantity() == 0) {
+						myInvoice.removeProductFromInvoice(product);
+					}
+					bookStore.setBooksPrice(invoiceRepository);
+					updateBookTable(bsp, bookStore);
+					updateTotalIncome(bsp, bookStore);
+					showAvailableBooks(bsp, bookStore);
+				} else if (myInvoice.getPaymentAsString() == "Debt on the road") {
 
-				
-				
-				
+				}
+			} else {
+				JOptionPane.showMessageDialog(bsp, "No more copies");
+				book.setPrice(0);
+				updateBookTable(bsp, bookStore);
+
 			}
-		} else {
-			JOptionPane.showMessageDialog(bsp, "No more copies");
-			book.setPrice(0);
-			updateBookTable(bsp, bookStore);
-			showAvailableBooks(bsp, bookStore);
+		} catch (NullPointerException e) {
+
 		}
 
 	}

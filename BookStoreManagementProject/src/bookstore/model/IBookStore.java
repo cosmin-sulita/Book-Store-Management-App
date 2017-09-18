@@ -45,4 +45,6 @@ public interface IBookStore extends Serializable {
 
 	void sell(IBook book, double supplierPrice);
 
+	void decreaseTotalIncomeBy(double value);
+
 }

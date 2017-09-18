@@ -1,6 +1,7 @@
 package bookstore.model;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 public interface IInvoice extends Serializable {
@@ -38,5 +39,19 @@ public interface IInvoice extends Serializable {
 	boolean isEmpty();
 
 	void decreaseInvoiceValue(double price);
+
+	Date getInvoiceDate();
+
+	String getPaymentAsStringForTable();
+
+	void removeProductFromInvoice(IProduct product);
+
+	boolean paymentIsDue();
+
+	boolean hasPayOnTermPayment();
+
+	void setPaid(boolean b);
+
+	boolean getPaid();
 
 }

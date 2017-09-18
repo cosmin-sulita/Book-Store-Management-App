@@ -3,6 +3,8 @@ package bookstore.view;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.Box;
@@ -17,8 +19,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
+import org.jdesktop.swingx.JXDatePicker;
 import org.jdesktop.swingx.autocomplete.AutoCompleteDecorator;
-
 import bookstore.model.IBook;
 import bookstore.model.ISupplier;
 import bookstore.model.MyTableModel;
@@ -58,7 +60,7 @@ public class AddInvoicePanel extends JPanel {
 	private JTextField jtPublisher;
 	private JTextField jtSupplierPrice;
 	private JTextField jtPersonalPrice;
-	private JTextField jtTerm;
+	private JXDatePicker jdTerm;
 
 	private JComboBox<ISupplier> jcSupplier;
 	private JComboBox<IBook> jcBook;
@@ -71,6 +73,7 @@ public class AddInvoicePanel extends JPanel {
 
 	private JRadioButton rbPayOnTerm;
 	private JRadioButton rbDebtOnTheRoad;
+	private ButtonGroup group;
 
 	private JCheckBox cbRebate;
 
@@ -121,7 +124,9 @@ public class AddInvoicePanel extends JPanel {
 		jtQuantity = new JTextField();
 		jtSupplierPrice = new JTextField();
 		jtPersonalPrice = new JTextField();
-		jtTerm = new JTextField();
+		jdTerm = new JXDatePicker();
+
+		jdTerm.setFormats(new SimpleDateFormat("dd/MM/yyyy"));
 
 		jcSupplier = new JComboBox<ISupplier>();
 		jcBook = new JComboBox<IBook>();
@@ -152,7 +157,7 @@ public class AddInvoicePanel extends JPanel {
 		rbPayOnTerm.setSelected(true);
 		rbDebtOnTheRoad = new JRadioButton("Debt On The Road");
 
-		ButtonGroup group = new ButtonGroup();
+		group = new ButtonGroup();
 		group.add(rbPayOnTerm);
 		group.add(rbDebtOnTheRoad);
 
@@ -226,13 +231,13 @@ public class AddInvoicePanel extends JPanel {
 		hBox6.add(bRemoveProduct);
 
 		hBox7.add(jlInvoice);
-		hBox7.add(Box.createHorizontalStrut(45));
+		hBox7.add(Box.createHorizontalStrut(40));
 		hBox7.add(rbPayOnTerm);
-		hBox7.add(Box.createHorizontalStrut(10));
-		hBox7.add(jtTerm);
-		hBox7.add(Box.createHorizontalStrut(10));
+		hBox7.add(Box.createHorizontalStrut(5));
+		hBox7.add(jdTerm);
+		hBox7.add(Box.createHorizontalStrut(5));
 		hBox7.add(rbDebtOnTheRoad);
-		hBox7.add(Box.createHorizontalStrut(45));
+		hBox7.add(Box.createHorizontalStrut(5));
 
 		hBox8.add(spBookTable);
 
@@ -272,6 +277,8 @@ public class AddInvoicePanel extends JPanel {
 		bRemoveProduct.addActionListener(a);
 		cbRebate.addActionListener(a);
 		jcBook.addActionListener(a);
+		rbPayOnTerm.addActionListener(a);
+		rbDebtOnTheRoad.addActionListener(a);
 	}
 
 	public JButton getButtonSaveInvoice() {
@@ -429,8 +436,32 @@ public class AddInvoicePanel extends JPanel {
 		}
 	}
 
-	public String getTerm() {
-		return jtTerm.getText().trim();
+	public Date getPaymentTerm() {
+		return jdTerm.getDate();
+	}
+
+	public void initTerm(Date date) {
+		jdTerm.setDate(date);
+	}
+
+	public void enableDatePicker(boolean b) {
+		jdTerm.setEnabled(b);
+	}
+
+	public boolean debtOnTheRoadIsSelected() {
+		return rbDebtOnTheRoad.isSelected();
+	}
+
+	public boolean payOnTermIsSelected() {
+		return rbPayOnTerm.isSelected();
+	}
+
+	public JRadioButton getRadioButtonDebtOnTheRoad() {
+		return rbDebtOnTheRoad;
+	}
+
+	public JRadioButton getRadioButtonPayOnTerm() {
+		return rbPayOnTerm;
 	}
 
 }

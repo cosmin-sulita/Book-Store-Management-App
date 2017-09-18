@@ -1,5 +1,6 @@
 package bookstore.builders;
 
+import java.util.Date;
 import java.util.List;
 
 import bookstore.model.IInvoice;
@@ -13,14 +14,14 @@ public class InvoiceBuilder implements IInvoiceBuilder {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public IInvoice build(int invoiceNumber, ISupplier supplier, List<IProduct> productList, String rebate,
-			double invoiceValue, IPayment paymentType) {
-		return new Invoice(invoiceNumber, supplier, productList, rebate, invoiceValue, paymentType);
+	public IInvoice build(int invoiceNumber, Date invoiceDate, ISupplier supplier, List<IProduct> productList,
+			String rebate, double invoiceValue, IPayment paymentType) {
+		return new Invoice(invoiceNumber, invoiceDate, supplier, productList, rebate, invoiceValue, paymentType);
 	}
 
 	@Override
 	public IInvoice buildEmptyInvoice() {
 		return new Invoice();
-	}	
+	}
 
 }

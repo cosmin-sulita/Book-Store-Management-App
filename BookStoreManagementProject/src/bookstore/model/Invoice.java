@@ -2,6 +2,7 @@ package bookstore.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 public class Invoice implements IInvoice {
@@ -10,30 +11,36 @@ public class Invoice implements IInvoice {
 
 	private int invoiceNumber;
 	private ISupplier supplier;
+	private Date invoiceDate;
 	private List<IProduct> productList;
 	private String rebate;
 	private double invoiceValue;
 	private IPayment paymentType;
+	private boolean paid;
 
 	public Invoice() {
 		super();
 		this.invoiceNumber = 0;
 		this.supplier = null;
+		this.invoiceDate = null;
 		this.productList = new ArrayList<IProduct>();
 		this.rebate = null;
 		this.invoiceValue = 0;
 		this.paymentType = null;
+		this.paid = false;
 	}
 
-	public Invoice(int invoiceNumber, ISupplier supplier, List<IProduct> productList, String rebate,
+	public Invoice(int invoiceNumber, Date invoiceDate, ISupplier supplier, List<IProduct> productList, String rebate,
 			double invoiceValue, IPayment paymentType) {
 		super();
 		this.invoiceNumber = invoiceNumber;
 		this.supplier = supplier;
+		this.invoiceDate = invoiceDate;
 		this.productList = productList;
 		this.invoiceValue = invoiceValue;
 		this.rebate = rebate;
 		this.paymentType = paymentType;
+		this.paid = false;
 	}
 
 	@Override
@@ -66,6 +73,11 @@ public class Invoice implements IInvoice {
 		removeProductValueFromInvoceValue(product.getTotalPrice());
 	}
 
+	@Override
+	public void removeProductFromInvoice(IProduct product) {
+		productList.remove(product);
+	}
+
 	private void removeProductValueFromInvoceValue(double value) {
 		invoiceValue -= value;
 	}
@@ -94,6 +106,11 @@ public class Invoice implements IInvoice {
 	@Override
 	public double getValue() {
 		return invoiceValue;
+	}
+
+	@Override
+	public Date getInvoiceDate() {
+		return invoiceDate;
 	}
 
 	@Override
@@ -162,6 +179,37 @@ public class Invoice implements IInvoice {
 		} else {
 			invoiceValue -= price;
 		}
+	}
+
+	@Override
+	public String getPaymentAsStringForTable() {
+		return paymentType.toStringForTable();
+	}
+
+	@Override
+	public boolean paymentIsDue() {
+		if (paymentType.dateIsDue()) {
+			return true;
+		} else
+			return false;
+	}
+
+	@Override
+	public boolean hasPayOnTermPayment() {
+		if (paymentType.toString() == "Pay on term") {
+			return true;
+		} else
+			return false;
+	}
+
+	@Override
+	public void setPaid(boolean b) {
+		paid = b;
+	}
+
+	@Override
+	public boolean getPaid() {
+		return paid;
 	}
 
 }

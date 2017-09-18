@@ -1,10 +1,11 @@
 package bookstore.controller;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -28,26 +29,6 @@ public class InvoicePanelController implements Serializable {
 
 	private List<Integer> usedInvoiceNumbers = new ArrayList<Integer>();
 
-	public void setCurrentDateDate(AddInvoicePanel aip) {
-		String date;
-		LocalDate localDate = LocalDate.now();
-		date = DateTimeFormatter.ofPattern("dd/MM/yyy").format(localDate);
-		aip.setTextFieldDate(date);
-	}
-
-	public void setPublisherText(AddInvoicePanel aip, IBookStore bookStore) {
-		IBook selectedBook = null;
-		if (bookStore.hasBooks()) {
-			selectedBook = aip.getSelectedBook();
-			aip.setPublisherName(selectedBook.getPublisher());
-		}
-	}
-
-	public void populateComboBoxes(AddInvoicePanel aip, IBookStore bookStore, ISupplierRepository supplierRepository) {
-		aip.populateBookComboBox(bookStore.getBookList());
-		aip.populateSupplierComboBox(supplierRepository.getList());
-	}
-
 	public void setInvoiceNumber(AddInvoicePanel aip) {
 		int invoiceNumber;
 		Random random = new Random();
@@ -61,6 +42,32 @@ public class InvoicePanelController implements Serializable {
 		aip.setInvoiceNumber(String.valueOf(invoiceNumber));
 	}
 
+	public void setCurrentDate(AddInvoicePanel aip) {
+		String dateString;
+		Date currentDate;
+		DateFormat dateFormat;
+
+		currentDate = new Date();
+		dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+		dateString = dateFormat.format(currentDate);
+		aip.setTextFieldDate(dateString);
+		aip.initTerm(currentDate);
+	}
+
+	public void populateComboBoxes(AddInvoicePanel aip, IBookStore bookStore, ISupplierRepository supplierRepository) {
+		aip.populateBookComboBox(bookStore.getBookList());
+		aip.populateSupplierComboBox(supplierRepository.getList());
+	}
+
+	public void setPublisherText(AddInvoicePanel aip, IBookStore bookStore) {
+		IBook selectedBook = null;
+		if (bookStore.hasBooks()) {
+			selectedBook = aip.getSelectedBook();
+			aip.setPublisherName(selectedBook.getPublisher());
+		}
+	}
+
 	public void setInvoiceValue(AddInvoicePanel aip, double totalAmmount) {
 		String formattedValue;
 		formattedValue = String.valueOf(Double.parseDouble(new DecimalFormat("##.##").format(totalAmmount)));
@@ -68,10 +75,18 @@ public class InvoicePanelController implements Serializable {
 	}
 
 	public void setRebatePricing(AddInvoicePanel aip) {
-		if (aip.getCheckBoxRebate().isSelected()) {
+		if (aip.rebateIsSelected()) {
 			aip.disablePersonalPrice();
 		} else {
 			aip.enablePersonalPrice();
+		}
+	}
+
+	public void setSelectedPayment(AddInvoicePanel aip) {
+		if (aip.debtOnTheRoadIsSelected()) {
+			aip.enableDatePicker(false);
+		} else {
+			aip.enableDatePicker(true);
 		}
 	}
 
@@ -109,13 +124,13 @@ public class InvoicePanelController implements Serializable {
 							book.getTitle() + " already added!\nPlease select another book!");
 				} else {
 
-					quantity = Integer.parseInt(aip.getTextFieldQuantity());
-					supplierPrice = Double.parseDouble(aip.getTextFieldSupplierPrice());
+					quantity = Math.abs(Integer.parseInt(aip.getTextFieldQuantity()));
+					supplierPrice = Math.abs(Double.parseDouble(aip.getTextFieldSupplierPrice()));
 
 					if (aip.getCheckBoxRebate().isSelected()) {
 						personalPrice = supplierPrice;
 					} else {
-						personalPrice = Double.parseDouble(aip.getTextFieldPersonalPrice());
+						personalPrice = Math.abs(Double.parseDouble(aip.getTextFieldPersonalPrice()));
 					}
 
 					if (personalPrice < supplierPrice) {

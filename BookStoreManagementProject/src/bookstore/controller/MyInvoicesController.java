@@ -2,6 +2,7 @@ package bookstore.controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -38,6 +39,7 @@ public class MyInvoicesController implements Serializable {
 		String rebate;
 		double invoiceValue;
 		IPayment paymentType;
+		Date invoiceDate;
 
 		IInvoice newInvoice;
 		IInvoiceBuilder invoiceBuilder = new InvoiceBuilder();
@@ -47,6 +49,7 @@ public class MyInvoicesController implements Serializable {
 		try {
 			invoiceNumber = Integer.parseInt(aip.getTextFieldInvoiceNumber());
 			supplier = aip.getSelectedSupplier();
+			invoiceDate = new Date();
 
 			for (IProduct product : invoice.getProductList()) {
 				productList.add(product);
@@ -62,15 +65,25 @@ public class MyInvoicesController implements Serializable {
 			}
 
 			if (aip.getPaymentType() == "Pay on term") {
-				paymentType = payOnTermPaymentBuilder.build();
+				Date term = aip.getPaymentTerm();
+
+				if (term.before(invoiceDate)) {
+					JOptionPane.showMessageDialog(aip, "Payment term must be after current date");
+					aip.initTerm(invoiceDate);
+					throw new NullPointerException();
+				} else {
+					paymentType = payOnTermPaymentBuilder.build(term);
+				}
+
 			} else {
 				paymentType = debtOnTheRoadPaymentBuilder.build();
 			}
 
-			newInvoice = invoiceBuilder.build(invoiceNumber, supplier, productList, rebate, invoiceValue, paymentType);
+			newInvoice = invoiceBuilder.build(invoiceNumber, invoiceDate, supplier, productList, rebate, invoiceValue,
+					paymentType);
 
 			if (newInvoice.isEmpty()) {
-				JOptionPane.showMessageDialog(aip, "Invoice is empty");
+				JOptionPane.showMessageDialog(aip, "Product list is empty");
 			} else {
 				invoiceRepository.addInvoiceToList(newInvoice);
 			}
@@ -80,7 +93,7 @@ public class MyInvoicesController implements Serializable {
 			bookStore.addBooksToStock(newInvoice);
 			bookStore.setBooksPrice(invoiceRepository);
 		} catch (NullPointerException e) {
-			JOptionPane.showMessageDialog(aip, "Incomplete invoice");
+
 		}
 	}
 
@@ -154,6 +167,19 @@ public class MyInvoicesController implements Serializable {
 			updateBooksTable(mip, selectedInvoice);
 		} catch (IndexOutOfBoundsException e) {
 			JOptionPane.showMessageDialog(mip, "No invoice selected");
+		}
+	}
+
+	public void checkInvoicesToPay(MyInvoicesPanel mip, IInvoiceRepository invoiceRepository, IBookStore bookStore) {
+		List<IInvoice> invoiceList = invoiceRepository.getInvoiceList();
+		for (IInvoice invoice : invoiceList) {
+			if (invoice.hasPayOnTermPayment()) {
+				if (invoice.paymentIsDue()) {
+					bookStore.decreaseTotalIncomeBy(invoice.getValue());
+					invoice.setPaid(true);
+					updateInvoicesTable(mip, invoiceRepository);
+				}
+			}
 		}
 	}
 

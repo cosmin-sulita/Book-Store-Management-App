@@ -9,4 +9,15 @@ public class DebtOnTheRoadPayment implements IPayment {
 		return "Debt on the road";
 	}
 
+	@Override
+	public String toStringForTable() {
+		return "Debt of the road";
+	}
+
+	@Override
+	public boolean dateIsDue() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

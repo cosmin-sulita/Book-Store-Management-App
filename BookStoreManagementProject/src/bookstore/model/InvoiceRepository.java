@@ -30,9 +30,14 @@ public class InvoiceRepository implements IInvoiceRepository, IRepository {
 		for (int i = 0; i < invoiceList.size(); i++) {
 			total[i][0] = invoiceList.get(i).getInvoiceNumberAsString();
 			total[i][1] = invoiceList.get(i).getSupplierName();
-			total[i][2] = invoiceList.get(i).getValueAsString();
+			if (invoiceList.get(i).getPaid() == true) {
+				total[i][2] = "Paid - " + invoiceList.get(i).getValueAsString();
+				invoiceList.get(i).resetValue();
+			} else {
+				total[i][2] = invoiceList.get(i).getValueAsString();
+			}
 			total[i][3] = invoiceList.get(i).getRebateAsString();
-			total[i][4] = invoiceList.get(i).getPaymentAsString();
+			total[i][4] = invoiceList.get(i).getPaymentAsStringForTable();
 		}
 		return total;
 	}

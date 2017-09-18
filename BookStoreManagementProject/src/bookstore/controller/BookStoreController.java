@@ -143,7 +143,7 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 		} else if (event.getSource() == ls.getButtonNew()) {
 			ls.dispose();
 			invoicePanelController.setInvoiceNumber(aip);
-			invoicePanelController.setCurrentDateDate(aip);
+			invoicePanelController.setCurrentDate(aip);
 			screen.setVisible(true);
 		} else if (event.getSource() == ls.getButtonExit()) {
 			System.exit(0);
@@ -151,6 +151,9 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 			invoicePanelController.setPublisherText(aip, bookStore);
 		} else if (event.getSource() == aip.getCheckBoxRebate()) {
 			invoicePanelController.setRebatePricing(aip);
+		} else if (event.getSource() == aip.getRadioButtonDebtOnTheRoad()
+				|| event.getSource() == aip.getRadioButtonPayOnTerm()) {
+			invoicePanelController.setSelectedPayment(aip);
 		} else if (event.getSource() == aip.getButtonAddNewSupplier()) {
 			asf.setVisible(true);
 		} else if (event.getSource() == aip.getButtonAddNewBook()) {
@@ -225,9 +228,10 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 			bookStore.sortBookListAlphabetically();
 			supplierController.sortSupplierListAlphabetically(supplierRepository.getList());
 
+			myInvoicesController.checkInvoicesToPay(mip, invoiceRepository, bookStore);
 			bookController.updateBookTable(bsp, bookStore);
 			invoicePanelController.setInvoiceNumber(aip);
-			invoicePanelController.setCurrentDateDate(aip);
+			invoicePanelController.setCurrentDate(aip);
 			invoicePanelController.populateComboBoxes(aip, bookStore, supplierRepository);
 			myInvoicesController.updateInvoicesTable(mip, invoiceRepository);
 

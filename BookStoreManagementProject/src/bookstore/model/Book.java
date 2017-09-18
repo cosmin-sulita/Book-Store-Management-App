@@ -42,6 +42,16 @@ public class Book implements IBook {
 	}
 
 	@Override
+	public double getPrice() {
+		return price;
+	}
+
+	@Override
+	public int getStock() {
+		return stock;
+	}
+
+	@Override
 	public String getPriceAsString() {
 		return String.valueOf(price);
 	}
@@ -74,16 +84,6 @@ public class Book implements IBook {
 	@Override
 	public void setPrice(double personalPrice) {
 		price = personalPrice;
-	}
-
-	@Override
-	public int getStock() {
-		return stock;
-	}
-
-	@Override
-	public double getPrice() {
-		return price;
 	}
 
 }

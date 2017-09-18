@@ -1,6 +1,7 @@
 package bookstore.builders;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import bookstore.model.IInvoice;
@@ -12,7 +13,7 @@ public interface IInvoiceBuilder extends Serializable {
 
 	IInvoice buildEmptyInvoice();
 
-	IInvoice build(int invoiceNumber, ISupplier supplier, List<IProduct> productList, String rebate,
+	IInvoice build(int invoiceNumber, Date invoiceDate, ISupplier supplier, List<IProduct> productList, String rebate,
 			double invoiceValue, IPayment paymentType);
 
 }

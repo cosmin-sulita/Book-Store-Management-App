@@ -171,7 +171,7 @@ public class BookStore implements IBookStore, IRepository {
 		book.removeStock(1);
 		totalIncome += book.getPrice();
 	}
-	
+
 	@Override
 	public void sell(IBook book, double supplierPrice) {
 		book.removeStock(1);
@@ -215,5 +215,10 @@ public class BookStore implements IBookStore, IRepository {
 			}
 		}
 		return number;
+	}
+
+	@Override
+	public void decreaseTotalIncomeBy(double value) {
+		totalIncome -= value;
 	}
 }
