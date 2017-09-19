@@ -91,8 +91,8 @@ public class InvoicePanelController implements Serializable {
 	}
 
 	public void addBookToInvoice(BookStoreInterface screen, AddInvoicePanel aip, IInvoice invoice) {
-		boolean BookAlreadyExists = false;
-		boolean AllFieldsAreFilled = false;
+		boolean bookAlreadyExists = false;
+		boolean allFieldsAreFilled = false;
 
 		int quantity;
 		double supplierPrice;
@@ -104,22 +104,22 @@ public class InvoicePanelController implements Serializable {
 
 		if (aip.rebateIsSelected()) {
 			if (!aip.getTextFieldSupplierPrice().contentEquals("") && !aip.getTextFieldQuantity().contentEquals("")) {
-				AllFieldsAreFilled = true;
+				allFieldsAreFilled = true;
 			}
 		} else {
 			if (!aip.getTextFieldSupplierPrice().contentEquals("") && !aip.getTextFieldQuantity().contentEquals("")
 					&& !aip.getTextFieldPersonalPrice().contentEquals("")) {
-				AllFieldsAreFilled = true;
+				allFieldsAreFilled = true;
 			}
 		}
 
-		if (AllFieldsAreFilled) {
+		if (allFieldsAreFilled) {
 			try {
 
 				book = (IBook) aip.getComboBoxBook().getSelectedItem();
-				BookAlreadyExists = invoice.doesBookAlreadyExist(book);
+				bookAlreadyExists = invoice.doesBookAlreadyExist(book);
 
-				if (BookAlreadyExists) {
+				if (bookAlreadyExists) {
 					JOptionPane.showMessageDialog(screen,
 							book.getTitle() + " already added!\nPlease select another book!");
 				} else {
@@ -188,7 +188,7 @@ public class InvoicePanelController implements Serializable {
 		while (((MyTableModel) aip.getBookTable().getModel()).getRowCount() > 0) {
 			((MyTableModel) aip.getBookTable().getModel()).removeRow(0);
 		}
-		dataProduct = invoice.toStringVector();
+		dataProduct = invoice.toStringVectorProductList();
 		for (int i = 0; i < dataProduct.length; i++) {
 			((MyTableModel) aip.getBookTable().getModel()).addRow(dataProduct[i]);
 		}

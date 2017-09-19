@@ -154,7 +154,6 @@ public class BookStore implements IBookStore, IRepository {
 				}
 			}
 		}
-
 	}
 
 	@Override

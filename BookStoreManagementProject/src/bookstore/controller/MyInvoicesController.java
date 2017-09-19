@@ -30,6 +30,7 @@ public class MyInvoicesController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private static final int REBATE_PERCENT = 15;
+	private boolean invoiceError;
 
 	public void saveInvoice(AddInvoicePanel aip, MyInvoicesPanel mip, IInvoice invoice,
 			IInvoiceRepository invoiceRepository, IBookStore bookStore) {
@@ -74,6 +75,7 @@ public class MyInvoicesController implements Serializable {
 					throw new NullPointerException();
 				} else {
 					paymentType = payOnTermPaymentBuilder.build(term);
+					invoiceError = false;
 				}
 
 			} else {
@@ -94,7 +96,7 @@ public class MyInvoicesController implements Serializable {
 			bookStore.addBooksToStock(newInvoice);
 			bookStore.setBooksPrice(invoiceRepository);
 		} catch (NullPointerException e) {
-
+			invoiceError = true;
 		}
 	}
 
@@ -184,6 +186,10 @@ public class MyInvoicesController implements Serializable {
 				}
 			}
 		}
+	}
+
+	public boolean getInvoiceError() {
+		return invoiceError;
 	}
 
 }

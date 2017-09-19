@@ -212,4 +212,17 @@ public class Invoice implements IInvoice {
 		return paid;
 	}
 
+	@Override
+	public String[][] toStringVectorProductList() {
+		String[][] total = new String[productList.size()][5];
+		for (int i = 0; i < productList.size(); i++) {
+			total[i][0] = productList.get(i).getBookTitle();
+			total[i][1] = productList.get(i).getBookPublisher();
+			total[i][2] = productList.get(i).getQuantityAsString();
+			total[i][3] = productList.get(i).getSupplierPriceAsString();
+			total[i][4] = productList.get(i).getTotalPriceAsString();
+		}
+		return total;
+	}
+
 }

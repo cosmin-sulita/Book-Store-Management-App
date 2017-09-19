@@ -54,4 +54,6 @@ public interface IInvoice extends Serializable {
 
 	boolean getPaid();
 
+	String[][] toStringVectorProductList();
+
 }
