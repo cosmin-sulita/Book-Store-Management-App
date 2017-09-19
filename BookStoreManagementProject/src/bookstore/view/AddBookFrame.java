@@ -222,4 +222,11 @@ public class AddBookFrame extends JFrame {
 		return jtPublisher.getText().trim().contentEquals("");
 	}
 
+	public void clearFields() {
+		setTextFieldIsbn("");
+		setTextFieldTitle("");
+		setTextFieldAuthor("");
+		setTextFieldPublisher("");
+	}
+
 }

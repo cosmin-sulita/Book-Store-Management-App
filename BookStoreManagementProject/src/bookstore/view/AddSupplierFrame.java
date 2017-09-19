@@ -42,7 +42,7 @@ public class AddSupplierFrame extends JFrame {
 
 		jlName = new JLabel("Enter Name:");
 
-		jtName = new JTextField(10);
+		jtName = new JTextField();
 
 		jtName.setHorizontalAlignment(JTextField.RIGHT);
 
@@ -73,7 +73,6 @@ public class AddSupplierFrame extends JFrame {
 
 	public void addActionListener(ActionListener a) {
 		bAddSupplier.addActionListener(a);
-
 	}
 
 	public JButton getButtonAddSupplier() {

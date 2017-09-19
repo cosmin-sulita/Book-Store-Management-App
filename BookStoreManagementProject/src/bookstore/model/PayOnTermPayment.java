@@ -16,7 +16,7 @@ public class PayOnTermPayment implements IPayment {
 
 	@Override
 	public String toStringForTable() {
-		DateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy");
+		DateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
 		String formattedDate = dateFormatter.format(term);
 		return formattedDate;
 	}

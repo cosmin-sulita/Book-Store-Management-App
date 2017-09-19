@@ -89,6 +89,7 @@ public class AddInvoicePanel extends JPanel {
 		super(new FlowLayout());
 		intWidgets();
 		addWidgets();
+
 	}
 
 	private void intWidgets() {

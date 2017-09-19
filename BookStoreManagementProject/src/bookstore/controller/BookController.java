@@ -22,9 +22,11 @@ public class BookController implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	private static final int REBATE_PERCENT = 15;
+
 	public void addBookToBookStore(AddBookFrame abf, AddInvoicePanel aip, BrowseStorePanel bsp, IBookStore bookStore) {
-		boolean ISBNAlreadyExist = false;
-		boolean AllFieldsAreFilled = false;
+		boolean isbnAlreadyExists = false;
+		boolean allFieldsAreFilled = false;
 
 		String title;
 		String author;
@@ -40,18 +42,17 @@ public class BookController implements Serializable {
 
 		if (!abf.isbnFieldIsEmpty() && !abf.titleFieldIsEmpty() && !abf.authorFieldIsEmpty()
 				&& !abf.publisherFieldIsEmpty()) {
-			AllFieldsAreFilled = true;
+			allFieldsAreFilled = true;
 		}
 
-		if (AllFieldsAreFilled) {
+		if (allFieldsAreFilled) {
 			try {
 				isbn = Integer.parseInt(abf.getIsbn());
+				isbnAlreadyExists = bookStore.doesISBNAlreadyExist(isbn);
 
-				ISBNAlreadyExist = bookStore.doesISBNAlreadyExist(isbn);
-				if (ISBNAlreadyExist) {
+				if (isbnAlreadyExists) {
 					JOptionPane.showMessageDialog(abf, isbn + " already exist!\nPlease use another isbn!");
 				} else {
-
 					title = abf.getTitle();
 					author = abf.getAuthor();
 					publisher = abf.getPublisher();
@@ -65,10 +66,7 @@ public class BookController implements Serializable {
 					newBookIndex = bookStore.getIndexOf(book);
 					aip.insertBookInComboBox(book, newBookIndex);
 
-					abf.setTextFieldIsbn("");
-					abf.setTextFieldTitle("");
-					abf.setTextFieldAuthor("");
-					abf.setTextFieldPublisher("");
+					abf.clearFields();
 					abf.appendLog("\n> " + book.getTitle() + " has been added to the library!");
 
 					updateBookTable(bsp, bookStore);
@@ -106,7 +104,6 @@ public class BookController implements Serializable {
 	public void searchBook(BrowseStorePanel bsp, IBookStore bookStore) {
 		String searchedBook;
 		IBook foundBook;
-		String dataBook[][];
 
 		searchedBook = bsp.getSearchedBook();
 
@@ -120,18 +117,24 @@ public class BookController implements Serializable {
 					foundBook = bookStore.getBookByISBN(searchedBook);
 				}
 
-				while (((MyTableModel) bsp.getBookTable().getModel()).getRowCount() > 0) {
-					((MyTableModel) bsp.getBookTable().getModel()).removeRow(0);
-				}
-				dataBook = bookStore.toStringVector(foundBook);
-				for (int i = 0; i < dataBook.length; i++) {
-					((MyTableModel) bsp.getBookTable().getModel()).addRow(dataBook[i]);
-				}
+				display(bsp, foundBook, bookStore);
+
 				bsp.clearSearchTextField();
 			} catch (NullPointerException e) {
 				JOptionPane.showMessageDialog(bsp, "Book not found");
 				updateBookTable(bsp, bookStore);
 			}
+		}
+	}
+
+	private void display(BrowseStorePanel bsp, IBook foundBook, IBookStore bookStore) {
+		String dataBook[][];
+		while (((MyTableModel) bsp.getBookTable().getModel()).getRowCount() > 0) {
+			((MyTableModel) bsp.getBookTable().getModel()).removeRow(0);
+		}
+		dataBook = bookStore.toStringVector(foundBook);
+		for (int i = 0; i < dataBook.length; i++) {
+			((MyTableModel) bsp.getBookTable().getModel()).addRow(dataBook[i]);
 		}
 	}
 
@@ -157,11 +160,11 @@ public class BookController implements Serializable {
 		IProduct product;
 		IInvoice myInvoice;
 
-		book = getSelectedBook(bsp, bookStore);
-		myInvoice = invoiceRepository.getInvoiceThatContains(book);
-		product = invoiceRepository.getProduct(book);
-
 		try {
+			book = getSelectedBook(bsp, bookStore);
+			myInvoice = invoiceRepository.getInvoiceThatContains(book);
+			product = invoiceRepository.getProduct(book);
+
 			if (bookStore.hasCopiesOf(book)) {
 				if (myInvoice.getPaymentAsString() == "Pay on term") {
 					bookStore.sell(book);
@@ -174,7 +177,27 @@ public class BookController implements Serializable {
 					updateTotalIncome(bsp, bookStore);
 					showAvailableBooks(bsp, bookStore);
 				} else if (myInvoice.getPaymentAsString() == "Debt on the road") {
+					if (myInvoice.getRebateAsString() == "No") {
+						bookStore.sell(book, product.getSupplierPrice());
+					} else {
+						double rebatePrice = product.getSupplierPrice()
+								- product.getSupplierPrice() * REBATE_PERCENT / 100;
+						bookStore.sell(book, rebatePrice);
+					}
+					myInvoice.decreaseInvoiceValue(product.getSupplierPrice());
 
+					product.decreaseStoreQuantity();
+					if (product.getStoreQuantity() == 0) {
+						myInvoice.removeProductFromInvoice(product);
+					}
+
+					if (myInvoice.getValue() <= 0) {
+						myInvoice.setPaid(true);
+					}
+					bookStore.setBooksPrice(invoiceRepository);
+					updateBookTable(bsp, bookStore);
+					updateTotalIncome(bsp, bookStore);
+					showAvailableBooks(bsp, bookStore);
 				}
 			} else {
 				JOptionPane.showMessageDialog(bsp, "No more copies");

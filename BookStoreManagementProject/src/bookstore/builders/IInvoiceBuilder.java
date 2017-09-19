@@ -11,9 +11,9 @@ import bookstore.model.ISupplier;
 
 public interface IInvoiceBuilder extends Serializable {
 
-	IInvoice buildEmptyInvoice();
-
 	IInvoice build(int invoiceNumber, Date invoiceDate, ISupplier supplier, List<IProduct> productList, String rebate,
 			double invoiceValue, IPayment paymentType);
+
+	IInvoice buildEmptyInvoice();
 
 }

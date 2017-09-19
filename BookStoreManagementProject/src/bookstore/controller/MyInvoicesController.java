@@ -1,6 +1,7 @@
 package bookstore.controller;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -124,9 +125,11 @@ public class MyInvoicesController implements Serializable {
 
 	private void setTotalInvoicesValue(MyInvoicesPanel mip, IInvoiceRepository invoiceRepository) {
 		double totalInvoiceValue;
+		String formattedValue;
 		invoiceRepository.calculateTotalInvoiceValue();
 		totalInvoiceValue = invoiceRepository.getTotalInvoiceValue();
-		mip.setTotalInvoiceValue(String.valueOf(totalInvoiceValue));
+		formattedValue = String.valueOf(Double.parseDouble(new DecimalFormat("##.##").format(totalInvoiceValue)));
+		mip.setTotalInvoiceValue(formattedValue);
 	}
 
 	public void openInvoice(BookStoreInterface screen, MyInvoicesPanel mip, IInvoiceRepository invoiceRepository) {
