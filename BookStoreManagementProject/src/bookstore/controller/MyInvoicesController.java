@@ -182,6 +182,7 @@ public class MyInvoicesController implements Serializable {
 				if (invoice.paymentIsDue()) {
 					bookStore.decreaseTotalIncomeBy(invoice.getValue());
 					invoice.setPaid(true);
+					invoice.resetValue();
 					updateInvoicesTable(mip, invoiceRepository);
 				}
 			}
