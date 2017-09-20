@@ -72,7 +72,7 @@ public class AddInvoicePanel extends JPanel {
 	private JButton bRemoveProduct;
 
 	private JRadioButton rbPayOnTerm;
-	private JRadioButton rbDebtOnTheRoad;
+	private JRadioButton rbPayBySale;
 	private ButtonGroup group;
 
 	private JCheckBox cbRebate;
@@ -156,11 +156,11 @@ public class AddInvoicePanel extends JPanel {
 
 		rbPayOnTerm = new JRadioButton("Pay On Term");
 		rbPayOnTerm.setSelected(true);
-		rbDebtOnTheRoad = new JRadioButton("Debt On The Road");
+		rbPayBySale = new JRadioButton("Pay By Sale");
 
 		group = new ButtonGroup();
 		group.add(rbPayOnTerm);
-		group.add(rbDebtOnTheRoad);
+		group.add(rbPayBySale);
 
 		cbRebate = new JCheckBox("Rebate");
 
@@ -232,12 +232,12 @@ public class AddInvoicePanel extends JPanel {
 		hBox6.add(bRemoveProduct);
 
 		hBox7.add(jlInvoice);
-		hBox7.add(Box.createHorizontalStrut(40));
+		hBox7.add(Box.createHorizontalStrut(100));
 		hBox7.add(rbPayOnTerm);
 		hBox7.add(Box.createHorizontalStrut(5));
 		hBox7.add(jdTerm);
 		hBox7.add(Box.createHorizontalStrut(5));
-		hBox7.add(rbDebtOnTheRoad);
+		hBox7.add(rbPayBySale);
 		hBox7.add(Box.createHorizontalStrut(5));
 
 		hBox8.add(spBookTable);
@@ -279,7 +279,7 @@ public class AddInvoicePanel extends JPanel {
 		cbRebate.addActionListener(a);
 		jcBook.addActionListener(a);
 		rbPayOnTerm.addActionListener(a);
-		rbDebtOnTheRoad.addActionListener(a);
+		rbPayBySale.addActionListener(a);
 	}
 
 	public JButton getButtonSaveInvoice() {
@@ -433,7 +433,7 @@ public class AddInvoicePanel extends JPanel {
 		if (rbPayOnTerm.isSelected()) {
 			return "Pay on term";
 		} else {
-			return "Debt on the road";
+			return "Pay by sale";
 		}
 	}
 
@@ -449,16 +449,16 @@ public class AddInvoicePanel extends JPanel {
 		jdTerm.setEnabled(b);
 	}
 
-	public boolean debtOnTheRoadIsSelected() {
-		return rbDebtOnTheRoad.isSelected();
+	public boolean PayBySaleIsSelected() {
+		return rbPayBySale.isSelected();
 	}
 
 	public boolean payOnTermIsSelected() {
 		return rbPayOnTerm.isSelected();
 	}
 
-	public JRadioButton getRadioButtonDebtOnTheRoad() {
-		return rbDebtOnTheRoad;
+	public JRadioButton getRadioButtonPayBySale() {
+		return rbPayBySale;
 	}
 
 	public JRadioButton getRadioButtonPayOnTerm() {

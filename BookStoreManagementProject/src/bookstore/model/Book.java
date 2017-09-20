@@ -62,13 +62,8 @@ public class Book implements IBook {
 	}
 
 	@Override
-	public String getISBN() {
+	public String getIsbnAsString() {
 		return String.valueOf(isbn);
-	}
-
-	@Override
-	public String toString() {
-		return title;
 	}
 
 	@Override
@@ -84,6 +79,11 @@ public class Book implements IBook {
 	@Override
 	public void setPrice(double personalPrice) {
 		price = personalPrice;
+	}
+
+	@Override
+	public String toString() {
+		return title;
 	}
 
 }

@@ -151,7 +151,7 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 			invoicePanelController.setPublisherText(aip, bookStore);
 		} else if (event.getSource() == aip.getCheckBoxRebate()) {
 			invoicePanelController.setRebatePricing(aip);
-		} else if (event.getSource() == aip.getRadioButtonDebtOnTheRoad()
+		} else if (event.getSource() == aip.getRadioButtonPayBySale()
 				|| event.getSource() == aip.getRadioButtonPayOnTerm()) {
 			invoicePanelController.setSelectedPayment(aip);
 		} else if (event.getSource() == aip.getButtonAddNewSupplier()) {
@@ -164,7 +164,7 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 			invoicePanelController.removeBookFromInvoice(screen, aip, invoice);
 		} else if (event.getSource() == aip.getButtonSaveInvoice()) {
 			myInvoicesController.saveInvoice(aip, mip, invoice, invoiceRepository, bookStore);
-			if ((myInvoicesController.getInvoiceError() == false) || (aip.debtOnTheRoadIsSelected())) {
+			if ((myInvoicesController.getInvoiceError() == false) || (aip.PayBySaleIsSelected())) {
 				invoicePanelController.clearInvoicePanel(aip, invoice);
 				bookController.updateBookTable(bsp, bookStore);
 			}
@@ -198,6 +198,8 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 			save();
 		} else if (event.getSource() == mip.getButtonSaveAndQuit()) {
 			saveAndQuit();
+		} else if (event.getSource() == mip.getButtonReturnBooks()) {
+
 		}
 	}
 

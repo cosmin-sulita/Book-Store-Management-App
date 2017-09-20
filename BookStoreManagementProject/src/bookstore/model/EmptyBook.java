@@ -54,7 +54,7 @@ public class EmptyBook implements IBook {
 	}
 
 	@Override
-	public String getISBN() {
+	public String getIsbnAsString() {
 		// TODO Auto-generated method stub
 		return null;
 	}

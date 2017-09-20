@@ -35,6 +35,7 @@ public class MyInvoicesPanel extends JPanel {
 	private JButton bDeleteInvoice;
 	private JButton bSave;
 	private JButton bSaveAndQuit;
+	private JButton bReturnBooks;
 
 	private JTable tInvoices;
 	private JTable tBooks;
@@ -76,6 +77,7 @@ public class MyInvoicesPanel extends JPanel {
 		bDeleteInvoice = new JButton("Delete");
 		bSave = new JButton("Save");
 		bSaveAndQuit = new JButton("Save & Quit");
+		bReturnBooks = new JButton("Return Books");
 
 		model = new MyTableModel(invoiceData, invoiceColumns);
 		tInvoices = new JTable(model);
@@ -127,7 +129,9 @@ public class MyInvoicesPanel extends JPanel {
 		hBox5.add(bSave);
 		hBox5.add(Box.createHorizontalStrut(5));
 		hBox5.add(bSaveAndQuit);
-		hBox5.add(Box.createHorizontalStrut(100));
+		hBox5.add(Box.createHorizontalStrut(5));
+		hBox5.add(bReturnBooks);
+		hBox5.add(Box.createHorizontalStrut(10));
 		hBox5.add(jlTotalInvoices);
 		hBox5.add(Box.createHorizontalStrut(10));
 		hBox5.add(jtTotalInvoices);
@@ -150,6 +154,7 @@ public class MyInvoicesPanel extends JPanel {
 		bDeleteInvoice.addActionListener(a);
 		bSave.addActionListener(a);
 		bSaveAndQuit.addActionListener(a);
+		bReturnBooks.addActionListener(a);
 	}
 
 	public JButton getButtonDeleteInvoice() {
@@ -166,6 +171,10 @@ public class MyInvoicesPanel extends JPanel {
 
 	public JButton getButtonSaveAndQuit() {
 		return bSaveAndQuit;
+	}
+
+	public JButton getButtonReturnBooks() {
+		return bReturnBooks;
 	}
 
 	public JTable getInvoicesTable() {

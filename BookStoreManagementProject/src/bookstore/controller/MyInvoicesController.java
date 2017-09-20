@@ -9,11 +9,10 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
-import bookstore.builders.DebtOnTheRoadPaymentBuilder;
 import bookstore.builders.IInvoiceBuilder;
-import bookstore.builders.IPaymentBuilder;
+import bookstore.builders.IPaymentFactory;
 import bookstore.builders.InvoiceBuilder;
-import bookstore.builders.PayOnTermPaymentBuilder;
+import bookstore.builders.PaymentFactory;
 import bookstore.model.IBookStore;
 import bookstore.model.IInvoice;
 import bookstore.model.IInvoiceRepository;
@@ -45,8 +44,7 @@ public class MyInvoicesController implements Serializable {
 
 		IInvoice newInvoice;
 		IInvoiceBuilder invoiceBuilder = new InvoiceBuilder();
-		IPaymentBuilder payOnTermPaymentBuilder = new PayOnTermPaymentBuilder();
-		IPaymentBuilder debtOnTheRoadPaymentBuilder = new DebtOnTheRoadPaymentBuilder();
+		IPaymentFactory paymentFactory = new PaymentFactory();
 
 		try {
 			invoiceNumber = Integer.parseInt(aip.getTextFieldInvoiceNumber());
@@ -74,12 +72,11 @@ public class MyInvoicesController implements Serializable {
 					aip.initTerm(invoiceDate);
 					throw new NullPointerException();
 				} else {
-					paymentType = payOnTermPaymentBuilder.build(term);
+					paymentType = paymentFactory.buildPayOnTermPayment(term);
 					invoiceError = false;
 				}
-
 			} else {
-				paymentType = debtOnTheRoadPaymentBuilder.build();
+				paymentType = paymentFactory.buildPayBySalePayment();
 			}
 
 			newInvoice = invoiceBuilder.build(invoiceNumber, invoiceDate, supplier, productList, rebate, invoiceValue,

@@ -176,7 +176,7 @@ public class BookController implements Serializable {
 					updateBookTable(bsp, bookStore);
 					updateTotalIncome(bsp, bookStore);
 					showAvailableBooks(bsp, bookStore);
-				} else if (myInvoice.getPaymentAsString() == "Debt on the road") {
+				} else if (myInvoice.getPaymentAsString() == "Pay by sale") {
 					if (myInvoice.getRebateAsString() == "No") {
 						bookStore.sell(book, product.getSupplierPrice());
 					} else {

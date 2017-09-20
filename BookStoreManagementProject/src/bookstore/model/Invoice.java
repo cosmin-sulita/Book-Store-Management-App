@@ -105,7 +105,7 @@ public class Invoice implements IInvoice {
 
 	@Override
 	public double getValue() {
-		return invoiceValue;
+		return Math.floor(invoiceValue * 100) / 100;
 	}
 
 	@Override
@@ -130,12 +130,12 @@ public class Invoice implements IInvoice {
 
 	@Override
 	public String getValueAsString() {
-		return String.valueOf(invoiceValue);
+		return String.valueOf(getValue());
 	}
 
 	@Override
 	public String getRebateAsString() {
-		return String.valueOf(rebate);
+		return rebate;
 	}
 
 	@Override

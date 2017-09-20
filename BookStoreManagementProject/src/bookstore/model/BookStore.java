@@ -60,7 +60,7 @@ public class BookStore implements IBookStore, IRepository {
 	@Override
 	public IBook getBookByISBN(String isbn) {
 		for (int i = 0; i < bookList.size(); i++) {
-			if (bookList.get(i).getISBN().contentEquals(isbn)) {
+			if (bookList.get(i).getIsbnAsString().contentEquals(isbn)) {
 				return bookList.get(i);
 			}
 		}
@@ -86,7 +86,7 @@ public class BookStore implements IBookStore, IRepository {
 			total[i][2] = bookList.get(i).getPublisher();
 			total[i][3] = bookList.get(i).getPriceAsString();
 			total[i][4] = bookList.get(i).getStockAsString();
-			total[i][5] = bookList.get(i).getISBN();
+			total[i][5] = bookList.get(i).getIsbnAsString();
 		}
 		return total;
 	}
@@ -136,7 +136,7 @@ public class BookStore implements IBookStore, IRepository {
 		total[0][2] = foundBook.getPublisher();
 		total[0][3] = foundBook.getPriceAsString();
 		total[0][4] = foundBook.getStockAsString();
-		total[0][5] = foundBook.getISBN();
+		total[0][5] = foundBook.getIsbnAsString();
 
 		return total;
 	}
@@ -179,7 +179,7 @@ public class BookStore implements IBookStore, IRepository {
 
 	@Override
 	public double getTotalIncome() {
-		return totalIncome;
+		return Math.floor(totalIncome * 100) / 100;
 	}
 
 	@Override
@@ -199,7 +199,7 @@ public class BookStore implements IBookStore, IRepository {
 				total[j][2] = bookList.get(i).getPublisher();
 				total[j][3] = bookList.get(i).getPriceAsString();
 				total[j][4] = bookList.get(i).getStockAsString();
-				total[j][5] = bookList.get(i).getISBN();
+				total[j][5] = bookList.get(i).getIsbnAsString();
 				j++;
 			}
 		}

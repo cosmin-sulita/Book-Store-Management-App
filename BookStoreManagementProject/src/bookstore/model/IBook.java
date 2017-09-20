@@ -16,7 +16,7 @@ public interface IBook extends Serializable {
 
 	String getStockAsString();
 
-	String getISBN();
+	String getIsbnAsString();
 
 	void addStock(int quantity);
 

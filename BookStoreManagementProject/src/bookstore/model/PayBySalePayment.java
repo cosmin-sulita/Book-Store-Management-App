@@ -1,17 +1,17 @@
 package bookstore.model;
 
-public class DebtOnTheRoadPayment implements IPayment {
+public class PayBySalePayment implements IPayment {
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	public String toString() {
-		return "Debt on the road";
+		return "Pay by sale";
 	}
 
 	@Override
 	public String toStringForTable() {
-		return "Debt of the road";
+		return "Pay by sale";
 	}
 
 	@Override

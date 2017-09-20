@@ -83,7 +83,7 @@ public class InvoicePanelController implements Serializable {
 	}
 
 	public void setSelectedPayment(AddInvoicePanel aip) {
-		if (aip.debtOnTheRoadIsSelected()) {
+		if (aip.PayBySaleIsSelected()) {
 			aip.enableDatePicker(false);
 		} else {
 			aip.enableDatePicker(true);

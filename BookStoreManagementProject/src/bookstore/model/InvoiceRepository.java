@@ -66,7 +66,7 @@ public class InvoiceRepository implements IInvoiceRepository, IRepository {
 
 	@Override
 	public double getTotalInvoiceValue() {
-		return totalInvoiceValue;
+		return Math.floor(totalInvoiceValue * 100) / 100;
 	}
 
 	@Override
