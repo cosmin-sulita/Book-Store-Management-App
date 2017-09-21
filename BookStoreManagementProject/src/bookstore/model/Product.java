@@ -70,6 +70,11 @@ public class Product implements IProduct {
 	}
 
 	@Override
+	public String getPersonalPriceAsString() {
+		return String.valueOf(personalPrice);
+	}
+
+	@Override
 	public String getTotalPriceAsString() {
 		return String.valueOf(totalPrice);
 	}
@@ -82,11 +87,6 @@ public class Product implements IProduct {
 	@Override
 	public int getStoreQuantity() {
 		return storeQuantity;
-	}
-
-	@Override
-	public String getPersonalPriceAsString() {
-		return String.valueOf(personalPrice);
 	}
 
 }

@@ -130,7 +130,6 @@ public class BookStore implements IBookStore, IRepository {
 	@Override
 	public String[][] toStringVector(IBook foundBook) {
 		String[][] total = new String[1][6];
-
 		total[0][0] = foundBook.getTitle();
 		total[0][1] = foundBook.getAuthor();
 		total[0][2] = foundBook.getPublisher();
@@ -139,6 +138,35 @@ public class BookStore implements IBookStore, IRepository {
 		total[0][5] = foundBook.getIsbnAsString();
 
 		return total;
+	}
+
+	@Override
+	public String[][] toStringVectorForAvailableBooks() {
+		int size = getAvailableBooksNumber();
+		String[][] total = new String[size][6];
+		int j = 0;
+		for (int i = 0; i < bookList.size(); i++) {
+			if (bookList.get(i).getStock() > 0) {
+				total[j][0] = bookList.get(i).getTitle();
+				total[j][1] = bookList.get(i).getAuthor();
+				total[j][2] = bookList.get(i).getPublisher();
+				total[j][3] = bookList.get(i).getPriceAsString();
+				total[j][4] = bookList.get(i).getStockAsString();
+				total[j][5] = bookList.get(i).getIsbnAsString();
+				j++;
+			}
+		}
+		return total;
+	}
+
+	private int getAvailableBooksNumber() {
+		int number = 0;
+		for (IBook book : bookList) {
+			if (book.getStock() > 0) {
+				number++;
+			}
+		}
+		return number;
 	}
 
 	@Override
@@ -151,6 +179,7 @@ public class BookStore implements IBookStore, IRepository {
 							&& book.getPublisher() == product.getBookPublisher()) {
 						book.setPrice(product.getPersonalPrice());
 					}
+					
 				}
 			}
 		}
@@ -185,35 +214,6 @@ public class BookStore implements IBookStore, IRepository {
 	@Override
 	public int getIndexOf(IBook book) {
 		return bookList.indexOf(book);
-	}
-
-	@Override
-	public String[][] toStringVectorForAvailableBooks() {
-		int size = getAvailableBooksNumber();
-		String[][] total = new String[size][6];
-		int j = 0;
-		for (int i = 0; i < bookList.size(); i++) {
-			if (bookList.get(i).getStock() > 0) {
-				total[j][0] = bookList.get(i).getTitle();
-				total[j][1] = bookList.get(i).getAuthor();
-				total[j][2] = bookList.get(i).getPublisher();
-				total[j][3] = bookList.get(i).getPriceAsString();
-				total[j][4] = bookList.get(i).getStockAsString();
-				total[j][5] = bookList.get(i).getIsbnAsString();
-				j++;
-			}
-		}
-		return total;
-	}
-
-	private int getAvailableBooksNumber() {
-		int number = 0;
-		for (IBook book : bookList) {
-			if (book.getStock() > 0) {
-				number++;
-			}
-		}
-		return number;
 	}
 
 	@Override

@@ -50,9 +50,9 @@ public interface IInvoice extends Serializable {
 
 	boolean hasPayOnTermPayment();
 
-	void setPaid(boolean b);
+	void setPaidStatus(boolean b);
 
-	boolean getPaid();
+	boolean getPaidStatus();
 
 	String[][] toStringVectorProductList();
 

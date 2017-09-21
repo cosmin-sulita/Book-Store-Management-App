@@ -199,7 +199,8 @@ public class BookStoreController implements ChangeListener, ActionListener, Seri
 		} else if (event.getSource() == mip.getButtonSaveAndQuit()) {
 			saveAndQuit();
 		} else if (event.getSource() == mip.getButtonReturnBooks()) {
-
+			myInvoicesController.returnBooks(mip, invoiceRepository, bookStore);
+			bookController.updateBookTable(bsp, bookStore);
 		}
 	}
 

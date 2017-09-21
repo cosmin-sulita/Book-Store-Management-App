@@ -26,7 +26,7 @@ public class SupplierRepository implements ISupplierRepository, IRepository {
 	@Override
 	public boolean doesNameAlreadyExist(String name) {
 		for (ISupplier supplier : supplierList) {
-			if (supplier.getName().equals(name)) {
+			if (supplier.hasSameNameAs(name)) {
 				return true;
 			}
 		}

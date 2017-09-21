@@ -203,12 +203,12 @@ public class Invoice implements IInvoice {
 	}
 
 	@Override
-	public void setPaid(boolean b) {
-		paid = b;
+	public void setPaidStatus(boolean status) {
+		paid = status;
 	}
 
 	@Override
-	public boolean getPaid() {
+	public boolean getPaidStatus() {
 		return paid;
 	}
 

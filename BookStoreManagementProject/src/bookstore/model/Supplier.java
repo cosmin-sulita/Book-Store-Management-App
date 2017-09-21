@@ -22,8 +22,12 @@ public class Supplier implements ISupplier {
 	}
 
 	@Override
-	public boolean isTheSameAs(ISupplier supplier) {
-		return name.equals(supplier.getName());
+	public boolean hasSameNameAs(String name) {
+		if (this.name.toLowerCase().equals(name.toLowerCase())) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 }

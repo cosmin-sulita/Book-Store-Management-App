@@ -30,6 +30,7 @@ public class MyInvoicesController implements Serializable {
 
 	private static final int REBATE_PERCENT = 15;
 	private boolean invoiceError;
+	private int selectedInvoiceIndex;
 
 	public void saveInvoice(AddInvoicePanel aip, MyInvoicesPanel mip, IInvoice invoice,
 			IInvoiceRepository invoiceRepository, IBookStore bookStore) {
@@ -142,6 +143,7 @@ public class MyInvoicesController implements Serializable {
 			row = ((JTable) mip.getInvoicesTable()).getSelectedRow();
 			invoiceNumber = ((JTable) mip.getInvoicesTable()).getValueAt(row, invoiceNumberColumn).toString();
 			invoice = invoiceRepository.getInvoiceByNumber(invoiceNumber);
+			selectedInvoiceIndex = invoiceRepository.getInvoiceList().indexOf(invoice);
 			updateBooksTable(mip, invoice);
 		} catch (IndexOutOfBoundsException e) {
 			JOptionPane.showMessageDialog(screen, "No invoice selected");
@@ -178,7 +180,7 @@ public class MyInvoicesController implements Serializable {
 			if (invoice.hasPayOnTermPayment()) {
 				if (invoice.paymentIsDue()) {
 					bookStore.decreaseTotalIncomeBy(invoice.getValue());
-					invoice.setPaid(true);
+					invoice.setPaidStatus(true);
 					invoice.resetValue();
 					updateInvoicesTable(mip, invoiceRepository);
 				}
@@ -188,6 +190,46 @@ public class MyInvoicesController implements Serializable {
 
 	public boolean getInvoiceError() {
 		return invoiceError;
+	}
+
+	public void returnBooks(MyInvoicesPanel mip, IInvoiceRepository invoiceRepository, IBookStore bookStore) {
+		IInvoice invoice;
+		IProduct product;
+		int row;
+		int titleColumn = 0;
+		int publisherColumn = 1;
+		String bookTitle;
+		String publisherName;
+
+		try {
+			invoice = invoiceRepository.getInvoiceList().get(selectedInvoiceIndex);
+
+			if (invoice.getPaymentAsString() == "Pay by sale") {
+				row = ((JTable) mip.getBookTable()).getSelectedRow();
+				bookTitle = ((JTable) mip.getBookTable()).getValueAt(row, titleColumn).toString();
+				publisherName = ((JTable) mip.getBookTable()).getValueAt(row, publisherColumn).toString();
+
+				product = invoice.getProductByTitleAndPublisher(bookTitle, publisherName);
+				invoice.removeProductFromInvoice(product);
+				updateBooksTable(mip, invoice);
+				bookStore.getBookByTitleAndPublisher(bookTitle, publisherName).removeStock(product.getStoreQuantity());
+				invoice.decreaseInvoiceValue(product.getPersonalPrice() * product.getStoreQuantity());
+				if (invoice.getValue() == 0) {
+					invoice.setPaidStatus(true);
+				}
+				updateInvoicesTable(mip, invoiceRepository);
+				checkInvoicesToPay(mip, invoiceRepository, bookStore);
+				bookStore.setBooksPrice(invoiceRepository);
+			} else {
+				JOptionPane.showMessageDialog(mip, "Invoice must be 'Pay by sale' to return books");
+			}
+
+		} catch (IndexOutOfBoundsException e) {
+			JOptionPane.showMessageDialog(mip, "No invoice selected");
+		}
+
+		System.out.println(selectedInvoiceIndex);
+
 	}
 
 }

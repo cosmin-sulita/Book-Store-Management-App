@@ -6,6 +6,6 @@ public interface ISupplier extends Serializable {
 
 	String getName();
 
-	boolean isTheSameAs(ISupplier supplier);
+	boolean hasSameNameAs(String name);
 
 }

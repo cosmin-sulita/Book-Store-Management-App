@@ -35,6 +35,7 @@ public class BookController implements Serializable {
 		int newBookIndex = 0;
 		int isbn = 0;
 		int stock = 0;
+
 		double price = 0.0;
 
 		IBook book;
@@ -80,12 +81,12 @@ public class BookController implements Serializable {
 	}
 
 	public void removeBookFromStore(AddInvoicePanel aip, BrowseStorePanel bsp, IBookStore bookStore) {
-		IBook book;
+		IBook selectedBook;
 
-		book = getSelectedBook(bsp, bookStore);
-		bookStore.removeBook(book);
+		selectedBook = getSelectedBook(bsp, bookStore);
+		bookStore.removeBook(selectedBook);
 		updateBookTable(bsp, bookStore);
-		aip.removeBookFromComboBox(book);
+		aip.removeBookFromComboBox(selectedBook);
 	}
 
 	public void updateBookTable(BrowseStorePanel bsp, IBookStore bookStore) {
@@ -192,7 +193,7 @@ public class BookController implements Serializable {
 					}
 
 					if (myInvoice.getValue() <= 0) {
-						myInvoice.setPaid(true);
+						myInvoice.setPaidStatus(true);
 					}
 					bookStore.setBooksPrice(invoiceRepository);
 					updateBookTable(bsp, bookStore);
