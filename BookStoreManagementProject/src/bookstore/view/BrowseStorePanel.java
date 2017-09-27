@@ -63,7 +63,7 @@ public class BrowseStorePanel extends JPanel {
 		hBox4 = Box.createHorizontalBox();
 		hBox5 = Box.createHorizontalBox();
 
-		jlSearchBook = new JLabel("Search Book");
+		jlSearchBook = new JLabel("Search Book by Title / ISBN");
 		jlBookTable = new JLabel("Showing All Books in Library");
 		jlTotalIncome = new JLabel("Total income");
 

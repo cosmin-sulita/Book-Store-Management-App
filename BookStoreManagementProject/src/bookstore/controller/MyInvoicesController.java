@@ -226,10 +226,9 @@ public class MyInvoicesController implements Serializable {
 
 		} catch (IndexOutOfBoundsException e) {
 			JOptionPane.showMessageDialog(mip, "No invoice selected");
+		} catch (NullPointerException e) {
+			JOptionPane.showMessageDialog(mip, "No book selected");
 		}
-
-		System.out.println(selectedInvoiceIndex);
-
 	}
 
 }
